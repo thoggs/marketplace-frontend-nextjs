@@ -1,0 +1,49 @@
+@import '../../../../mantine';
+
+.group {
+  height: 100%;
+}
+
+.switch {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.logoImg {
+  max-width: 5rem;
+  width: 100%;
+  height: auto;
+}
+
+.textLogo {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.icon {
+  width: rem(22px);
+  height: rem(22px);
+}
+
+.dark {
+  @include dark {
+    display: none;
+  }
+
+  @include light {
+    display: block;
+    color: var(--mantine-color-blue-6);
+  }
+}
+
+.light {
+  @include light {
+    display: none;
+  }
+
+  @include dark {
+    display: block;
+    color: var(--mantine-color-yellow-4);
+  }
+}
