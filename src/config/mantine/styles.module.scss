@@ -1,0 +1,40 @@
+@import '../../../mantine';
+
+@mixin dark-background {
+  background-color: rgba(5, 6, 9, 0.6);
+}
+
+@mixin light-background {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.appShell {
+  @include dark {
+    @include dark-background;
+  }
+
+  @include light {
+    @include light-background;
+  }
+}
+
+.main {
+  max-height: calc(100vh - 64px);
+  min-height: calc(100vh - 64px);
+}
+
+
+.header {
+  align-items: center;
+  padding-right: var(--mantine-spacing-xl);
+  padding-left: var(--mantine-spacing-xl);
+  backdrop-filter: blur(8px);
+
+  @include dark {
+    @include dark-background;
+  }
+
+  @include light {
+    @include light-background;
+  }
+}
