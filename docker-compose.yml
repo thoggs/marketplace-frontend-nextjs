@@ -1,0 +1,23 @@
+services:
+  nextjs:
+    container_name: zhavia-marketplace-frontend-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - zhavia-marketplace-network
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: 1
+      NEXT_PUBLIC_BASE_URL: 'http://localhost:8083'
+      AUTH_TRUST_HOST: true
+      AUTH_SECRET: 'Xk9kG5R2fI2r2fYjqM3OUClnHQB3igtEqXv2NdpzHrY='
+      AUTH_GITHUB_ID: 'Ov23li9ogKkhK6oszaIc'
+      AUTH_GITHUB_SECRET: '1354294712d4b739107f6d77848b57222f1edb8f'
+    restart: unless-stopped
+
+networks:
+  zhavia-marketplace-network:
+    driver: bridge
