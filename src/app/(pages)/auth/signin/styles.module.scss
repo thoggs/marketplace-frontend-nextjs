@@ -1,0 +1,58 @@
+@import '../../../../../mantine';
+
+.main {
+  overflow: auto;
+}
+
+.aside {
+  @media (max-width: $mantine-breakpoint-md) {
+    display: none;
+  }
+
+  @include light {
+    background: linear-gradient(90deg, var(--mantine-color-blue-3), var(--mantine-color-white));
+  }
+
+  @include dark {
+    background: linear-gradient(90deg, var(--mantine-color-blue-9), var(--mantine-color-dark-9));
+  }
+}
+
+.authForm {
+  @include dark {
+    background-color: var(--mantine-color-dark-9);
+  }
+}
+
+.iconBuildingStore {
+  width: 100%;
+  height: 100%;
+
+  @include light {
+    color: var(--mantine-color-blue-4);
+  }
+
+  @include dark {
+    color: var(--mantine-color-blue-1);
+  }
+}
+
+.illustrationText {
+  text-align: center;
+
+  @include light {
+    color: var(--mantine-color-dark-4);
+  }
+
+  @include dark {
+    color: var(--mantine-color-blue-1);
+  }
+}
+
+.input {
+  width: 100%;
+}
+
+.signinButton {
+  width: 100%;
+}
