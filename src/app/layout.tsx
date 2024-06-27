@@ -6,6 +6,8 @@ import RootStyleRegistry from "@/config/mantine";
 import AuthSessionProvider from "@/app/providers/auth/provider";
 import StoreProvider from "@/app/providers/store/provider";
 import QueryProvider from "@/app/providers/query/provider";
+import { assembleUserProfile } from "@/app/auth/session/assembleUserProfile";
+import DataProvider from "@/app/providers/data/provider";
 
 const inter = Inter({ subsets: [ 'latin' ] })
 
@@ -19,13 +21,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     </head>
     <body className={inter.className}>
     <AuthSessionProvider>
-      <StoreProvider>
+      <DataProvider>
         <QueryProvider>
           <RootStyleRegistry>
             {children}
           </RootStyleRegistry>
         </QueryProvider>
-      </StoreProvider>
+      </DataProvider>
     </AuthSessionProvider>
     </body>
     </html>

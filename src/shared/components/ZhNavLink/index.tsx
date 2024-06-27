@@ -13,7 +13,7 @@ const ZhNavLink = ({ href, label, icon }: ZhNavLinkProps) => {
       my={5}
       fw={530}
       className={classes.navlink}
-      href={href}
+      href={pathname === href ? undefined : href}
       label={label}
       active={isActive}
       leftSection={icon}

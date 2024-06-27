@@ -4,7 +4,8 @@ import {
   useMantineColorScheme,
   ActionIcon,
   useComputedColorScheme,
-  Burger
+  Burger, Avatar,
+  UnstyledButton, Text
 } from "@mantine/core";
 import { IconMoon, IconPower, IconSun } from "@tabler/icons-react";
 import React from "react";
@@ -14,10 +15,13 @@ import cx from 'clsx';
 import logo from '../../../../public/img/logo.png';
 import { setThemeColor } from "@/store/slices/themeColorSlice";
 import store from "@/store";
-import { ZhHeaderProps } from "@/shared/components/ZhHeader/types";
 import { onSubmitSignOut } from "@/app/actions/auth/actions";
+import { useSelector } from "react-redux";
+import { AppState } from "@/store/reducers/rootReducer";
+import { ZhHeaderProps } from "@/shared/components/ZhHeader/types";
 
-export default function TopHeader({ mobileOpened, desktopOpened, toggleMobile, toggleDesktop }: ZhHeaderProps) {
+export default function ZhHeader({ mobileOpened, desktopOpened, toggleMobile, toggleDesktop }: ZhHeaderProps) {
+  const userProfile = useSelector((state: AppState) => state.userProfile);
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('dark', { getInitialValueInEffect: true });
 
@@ -54,6 +58,24 @@ export default function TopHeader({ mobileOpened, desktopOpened, toggleMobile, t
         </Flex>
       </Flex>
       <Group className={classes.group}>
+        <UnstyledButton
+          style={{
+            padding: 'var(--mantine-spacing-md)',
+            color: 'var(--mantine-color-text)',
+            borderRadius: 'var(--mantine-radius-sm)',
+          }}>
+          <Group>
+            <Avatar src={userProfile.profileImage} radius="xl"/>
+            <div style={{ flex: 1 }}>
+              <Text size="sm" fw={500}>
+                {userProfile.name}
+              </Text>
+              <Text c="dimmed" size="xs">
+                {userProfile.email}
+              </Text>
+            </div>
+          </Group>
+        </UnstyledButton>
         <ActionIcon
           className={classes.switch}
           onClick={onSetThemeColor}

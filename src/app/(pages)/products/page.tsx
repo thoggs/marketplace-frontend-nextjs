@@ -1,8 +1,8 @@
 import ProductsView from "@/app/(pages)/products/view";
 import initApiService from "@/app/services/api/apiService";
 import { MainResponseWithPagination } from "@/shared/types/response/dto";
-import { URI_PATH } from "@/shared/constants/path";
 import { Product } from "@/shared/types/response/product";
+import { URI_PATH } from "@/shared/constants/path";
 
 export default async function ProductsPage() {
   const apiService = await initApiService();

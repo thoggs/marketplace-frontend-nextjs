@@ -18,12 +18,12 @@ import useRequest from '@/app/hooks/useRequest';
 import { MRT_Localization_PT_BR } from 'mantine-react-table/locales/pt-BR/index.esm.mjs';
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { URI_PATH } from "@/shared/constants/path";
-import { MainResponse, MainResponseWithPagination } from "@/shared/types/response/dto";
 import { useSession } from "next-auth/react";
 import { ProductsViewProps } from "@/app/(pages)/products/types";
-import { Product } from "@/shared/types/response/product";
 import useProductValidation from "@/shared/validators/hooks/useProductValidation";
+import { Product } from "@/shared/types/response/product";
+import { URI_PATH } from "@/shared/constants/path";
+import { MainResponse, MainResponseWithPagination } from "@/shared/types/response/dto";
 
 export default function ProductsView({ initialProducts }: ProductsViewProps) {
   const session = useSession();
@@ -296,10 +296,12 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
     };
 
   const handleSaveProduct: MRT_TableOptions<Product>['onEditingRowSave'] =
-    async ({
-             values,
-             table,
-           }) => {
+    async (
+      {
+        values,
+        table,
+      }
+    ) => {
       const newValidationErrors = validateProduct(values);
       if (Object.values(newValidationErrors).some((error) => error)) {
         setValidationErrors(newValidationErrors);

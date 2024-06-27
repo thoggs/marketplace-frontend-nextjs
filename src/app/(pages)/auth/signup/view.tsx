@@ -1,7 +1,6 @@
 'use client'
 import { useViewportSize } from "@mantine/hooks";
 import { Form, useForm, zodResolver } from "@mantine/form";
-import { UserValidateSchema } from "@/shared/validators/schema/user";
 import {
   Anchor,
   Button,
@@ -22,9 +21,10 @@ import useRequest from "@/app/hooks/useRequest";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { MainResponse } from "@/shared/types/response/dto";
 import React, { useState } from "react";
 import { UserFormType } from "@/app/(pages)/auth/signup/types";
+import { UserValidateSchema } from "@/shared/validators/schema/user";
+import { MainResponse } from "@/shared/types/response/dto";
 
 export default function SignUpView() {
   const { create } = useRequest();

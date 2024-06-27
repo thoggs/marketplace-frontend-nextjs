@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { User } from "@/shared/types/response/user";
 import { UserValidateSchema } from "@/shared/validators/schema/user";
+import { User } from "@/shared/types/response/user";
 
 export default function useUserValidation() {
   const [ validationErrors, setValidationErrors ] = useState<Record<string, string | undefined>>({});

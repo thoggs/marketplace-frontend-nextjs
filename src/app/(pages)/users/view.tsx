@@ -16,14 +16,14 @@ import { IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
 import { keepPreviousData, useMutation, useQuery, useQueryClient, } from '@tanstack/react-query';
 import useRequest from '@/app/hooks/useRequest';
 import { MRT_Localization_PT_BR } from 'mantine-react-table/locales/pt-BR/index.esm.mjs';
-import useUserValidation from "@/shared/validators/hooks/useUserValidation";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { User } from "@/shared/types/response/user";
-import { URI_PATH } from "@/shared/constants/path";
-import { MainResponse, MainResponseWithPagination } from "@/shared/types/response/dto";
 import { UsersViewProps } from "@/app/(pages)/users/types";
 import { useSession } from "next-auth/react";
+import useUserValidation from "@/shared/validators/hooks/useUserValidation";
+import { User } from '@/shared/types/response/user';
+import { MainResponse, MainResponseWithPagination } from "@/shared/types/response/dto";
+import { URI_PATH } from "@/shared/constants/path";
 
 export default function UsersView({ initialUsers }: UsersViewProps) {
   const session = useSession();
@@ -126,6 +126,7 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
       initialData: initialUsers,
       placeholderData: keepPreviousData,
       staleTime: !!session.data?.user.data.accessToken ? 0 : Infinity,
+      refetchIntervalInBackground: true,
       queryFn: async () => {
         const response = await list<MainResponseWithPagination<User>>(URI_PATH.API.USERS, {
           params: {
