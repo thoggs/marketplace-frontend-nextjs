@@ -1,5 +1,6 @@
 'use client';
 import 'mantine-react-table/styles.css';
+import '@mantine/charts/styles.css';
 import {
   MantineProvider,
   AppShell,

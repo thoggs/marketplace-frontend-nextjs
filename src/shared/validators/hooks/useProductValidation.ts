@@ -6,7 +6,13 @@ export default function useProductValidation() {
   const [ validationErrors, setValidationErrors ] = useState<Record<string, string | undefined>>({});
 
   const validateProduct = useCallback((product: Product) => {
-    const result = ProductValidateSchema.safeParse(product);
+    const productData = {
+      ...product,
+      stock: Number(product.stock),
+      price: Number(product.price),
+    };
+
+    const result = ProductValidateSchema.safeParse(productData);
     if (!result.success) {
       const errors = Object.fromEntries(
         Object.entries(result.error.flatten().fieldErrors)
