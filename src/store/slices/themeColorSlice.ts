@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-type themeColorType = {
-  themeColor: '#1A1B1E' | '#FFFFFF';
-}
+import { themeColorType } from "@/store/types";
 
 const initialState: themeColorType = {
   themeColor: '#1A1B1E',
@@ -21,4 +18,5 @@ export const themeColorSlice = createSlice({
 export const {
   setValue: setThemeColor,
 } = themeColorSlice.actions;
+
 export default themeColorSlice.reducer;

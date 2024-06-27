@@ -3,7 +3,11 @@ import React from "react";
 import { Inter } from 'next/font/google'
 import { ColorSchemeScript } from "@mantine/core";
 import RootStyleRegistry from "@/config/mantine";
-import AuthSessionProvider from "@/app/providers/authProvider";
+import AuthSessionProvider from "@/app/providers/auth/provider";
+import StoreProvider from "@/app/providers/store/provider";
+import QueryProvider from "@/app/providers/query/provider";
+import { assembleUserProfile } from "@/app/auth/session/assembleUserProfile";
+import DataProvider from "@/app/providers/data/provider";
 
 const inter = Inter({ subsets: [ 'latin' ] })
 
@@ -17,9 +21,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     </head>
     <body className={inter.className}>
     <AuthSessionProvider>
-      <RootStyleRegistry>
-        {children}
-      </RootStyleRegistry>
+      <DataProvider>
+        <QueryProvider>
+          <RootStyleRegistry>
+            {children}
+          </RootStyleRegistry>
+        </QueryProvider>
+      </DataProvider>
     </AuthSessionProvider>
     </body>
     </html>

@@ -17,7 +17,6 @@ declare module "next-auth" {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  secret: process.env.AUTH_SECRET,
   providers: [
     GitHub,
     Credentials({
@@ -71,6 +70,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     session({ session, token }) {
       return { ...session, ...token }
     },
+  },
+  session: {
+    maxAge: 3600,
+  },
+  jwt: {
+    maxAge: 3600
   },
   pages: {
     signIn: 'auth/signin',

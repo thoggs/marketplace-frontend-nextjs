@@ -1,10 +1,9 @@
 'use client'
 import { useViewportSize } from "@mantine/hooks";
 import { Form, useForm, zodResolver } from "@mantine/form";
-import { SignUpFormType, SignUpValidateSchema } from "@/app/(pages)/auth/signup/types";
 import {
   Anchor,
-  Box, Button,
+  Button,
   Card,
   Center,
   Container,
@@ -17,20 +16,22 @@ import {
   Text, ThemeIcon
 } from "@mantine/core";
 import classes from "@/app/(pages)/auth/signup/styles.module.scss";
-import { IconAt, IconShieldLock, IconUser, IconUserPlus, IconUsersPlus } from "@tabler/icons-react";
+import { IconAt, IconShieldLock, IconUser, IconUserPlus } from "@tabler/icons-react";
 import useRequest from "@/app/hooks/useRequest";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { MainResponse } from "@/shared/types/response/dto";
 import React, { useState } from "react";
+import { UserFormType } from "@/app/(pages)/auth/signup/types";
+import { UserValidateSchema } from "@/shared/validators/schema/user";
+import { MainResponse } from "@/shared/types/response/dto";
 
 export default function SignUpView() {
   const { create } = useRequest();
   const { height } = useViewportSize();
   const router = useRouter();
   const [ onSubmitLoading, setSubmitLoading ] = useState(false);
-  const form = useForm<SignUpFormType>({
+  const form = useForm<UserFormType>({
     initialValues: {
       firstName: String(),
       lastName: String(),
@@ -38,7 +39,7 @@ export default function SignUpView() {
       password: String(),
       confirmPassword: String()
     },
-    validate: zodResolver(SignUpValidateSchema)
+    validate: zodResolver(UserValidateSchema)
   });
 
   async function onSubmitSignUp() {
