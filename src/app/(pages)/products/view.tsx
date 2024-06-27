@@ -410,7 +410,7 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
     onSortingChange: setSorting,
     renderCreateRowModalContent: ({ table, row, internalEditComponents }) => (
       <Stack>
-        <Title order={3}>Cadastrar Usuário</Title>
+        <Title order={3}>Cadastrar Produto</Title>
         {internalEditComponents}
         <Flex justify='flex-end' mt='xl'>
           <MRT_EditActionButtons variant='text' table={table} row={row}/>
@@ -419,7 +419,7 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
     ),
     renderEditRowModalContent: ({ table, row, internalEditComponents }) => (
       <Stack>
-        <Title order={3}>Editar Usuário</Title>
+        <Title order={3}>Editar Produto</Title>
         {internalEditComponents}
         <Flex justify='flex-end' mt='xl'>
           <MRT_EditActionButtons variant='text' table={table} row={row}/>

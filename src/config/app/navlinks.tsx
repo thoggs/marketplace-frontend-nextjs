@@ -1,4 +1,4 @@
-import { IconDashboard, IconBuildingStore, IconUsers } from '@tabler/icons-react';
+import { IconDashboard, IconUsers, IconBrandDatabricks } from '@tabler/icons-react';
 import React, { ReactNode } from "react";
 
 type NavLinkItem = {
@@ -16,7 +16,7 @@ export const NAV_LINKS: NavLinkItem[] = [
   {
     href: '/products',
     label: 'Produtos',
-    icon: <IconBuildingStore size='1.3rem' stroke={1.5}/>,
+    icon: <IconBrandDatabricks size='1.3rem' stroke={1.5}/>,
   },
   {
     href: '/users',

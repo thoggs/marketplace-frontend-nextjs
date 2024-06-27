@@ -101,6 +101,36 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
             }),
         },
       },
+      {
+        accessorKey: 'password',
+        header: 'Senha',
+        mantineEditTextInputProps: {
+          type: 'text',
+          required: true,
+          maxLength: 50,
+          error: validationErrors?.password,
+          onFocus: () =>
+            setValidationErrors({
+              ...validationErrors,
+              password: undefined,
+            }),
+        },
+      },
+      {
+        accessorKey: 'confirmPassword',
+        header: 'Confirmar Senha',
+        mantineEditTextInputProps: {
+          type: 'text',
+          required: true,
+          maxLength: 50,
+          error: validationErrors?.confirmPassword,
+          onFocus: () =>
+            setValidationErrors({
+              ...validationErrors,
+              confirmPassword: undefined,
+            }),
+        },
+      },
     ],
     [ setValidationErrors, validationErrors ],
   );
@@ -146,6 +176,7 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
   function useCreateUser() {
     return useMutation({
       mutationFn: async (user: User) => {
+        console.log('TESTE')
         const req = create<User>(URI_PATH.API.USERS, user).then(response => response.data);
 
         await toast.promise(
@@ -344,6 +375,11 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
       showAlertBanner: isLoadingUsersError,
       showProgressBars: isFetchingUsers,
       density: 'xs',
+      columnVisibility: {
+        password: false,
+        confirmPassword: false,
+        'mrt-row-expand': false,
+      },
       globalFilter,
       sorting,
       pagination,
