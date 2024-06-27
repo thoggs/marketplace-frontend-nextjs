@@ -1,11 +1,9 @@
 'use client';
+import 'mantine-react-table/styles.css';
 import {
   MantineProvider,
-  AppShell, Text,
-  Stack, Box,
-  Card,
-  Group,
-  Badge,
+  AppShell,
+  Stack, Box, Container,
 } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
@@ -63,7 +61,9 @@ export default function RootStyleRegistry({ children }: RootLayoutProps) {
             </Stack>
           </AppShell.Navbar>
           <AppShell.Main>
-            {children}
+            <Box p='xl'>
+              {children}
+            </Box>
           </AppShell.Main>
         </AppShell>
       ) : (children)}

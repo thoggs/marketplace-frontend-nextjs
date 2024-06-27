@@ -1,6 +1,7 @@
 'use client';
 import axios, { AxiosInstance } from "axios";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export function useBaseRequest() {
   const session = useSession();
@@ -11,7 +12,7 @@ export function useBaseRequest() {
       headers: {
         'Content-Type': 'application/json',
         Accept: '*/*',
-        Authorization: `Bearer ${session?.data?.user?.accessToken}`,
+        Authorization: `Bearer ${session?.data?.user?.data.accessToken}`,
       }
     })
     instance.interceptors.response.use(async response => {

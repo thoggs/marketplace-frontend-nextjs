@@ -3,7 +3,7 @@ import { AxiosPromise, AxiosRequestConfig } from "axios";
 import { useBaseRequest } from "@/app/hooks/useBaseRequest";
 
 export default function useRequest() {
-  const { instance } = useBaseRequest()
+  const { instance } = useBaseRequest();
 
   const list = <T>(path: string, config?: AxiosRequestConfig): AxiosPromise<T> => {
     return instance.get(`${path}`, { ...config })
