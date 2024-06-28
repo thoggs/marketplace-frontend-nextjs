@@ -61,8 +61,6 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
         header: 'Nome',
         mantineEditTextInputProps: {
           type: 'text',
-          required: true,
-          maxLength: 50,
           error: validationErrors?.name,
           onFocus: () =>
             setValidationErrors({
@@ -76,8 +74,6 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
         header: 'Descrição',
         mantineEditTextInputProps: {
           type: 'text',
-          required: true,
-          maxLength: 50,
           error: validationErrors?.description,
           onFocus: () =>
             setValidationErrors({
@@ -91,8 +87,6 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
         header: 'Preço',
         mantineEditTextInputProps: {
           type: 'number',
-          required: true,
-          maxLength: 50,
           error: validationErrors?.price,
           onFocus: () =>
             setValidationErrors({
@@ -106,8 +100,6 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
         header: 'Quantidade',
         mantineEditTextInputProps: {
           type: 'number',
-          required: true,
-          maxLength: 50,
           error: validationErrors?.stock,
           onFocus: () =>
             setValidationErrors({
@@ -121,8 +113,6 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
         header: 'Categoria',
         mantineEditTextInputProps: {
           type: 'text',
-          required: true,
-          maxLength: 50,
           error: validationErrors?.category,
           onFocus: () =>
             setValidationErrors({

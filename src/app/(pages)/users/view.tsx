@@ -61,8 +61,6 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
         header: 'Nome',
         mantineEditTextInputProps: {
           type: 'text',
-          required: true,
-          maxLength: 50,
           error: validationErrors?.firstName,
           onFocus: () =>
             setValidationErrors({
@@ -76,8 +74,6 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
         header: 'Sobrenome',
         mantineEditTextInputProps: {
           type: 'text',
-          required: true,
-          maxLength: 50,
           error: validationErrors?.lastName,
           onFocus: () =>
             setValidationErrors({
@@ -91,8 +87,6 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
         header: 'Email',
         mantineEditTextInputProps: {
           type: 'email',
-          required: true,
-          maxLength: 60,
           error: validationErrors?.email,
           onFocus: () =>
             setValidationErrors({
@@ -105,9 +99,7 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
         accessorKey: 'password',
         header: 'Senha',
         mantineEditTextInputProps: {
-          type: 'text',
-          required: true,
-          maxLength: 50,
+          type: 'password',
           error: validationErrors?.password,
           onFocus: () =>
             setValidationErrors({
@@ -120,9 +112,7 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
         accessorKey: 'confirmPassword',
         header: 'Confirmar Senha',
         mantineEditTextInputProps: {
-          type: 'text',
-          required: true,
-          maxLength: 50,
+          type: 'password',
           error: validationErrors?.confirmPassword,
           onFocus: () =>
             setValidationErrors({

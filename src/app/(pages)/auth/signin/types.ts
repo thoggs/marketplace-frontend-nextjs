@@ -7,8 +7,7 @@ export type SignInFormType = {
 
 export const SignInValidateSchema = z.object({
   email: z.string()
-    .min(1, 'Campo obrigatório')
     .email({ message: 'Email inválido' }),
   password: z.string()
-    .min(1, 'Campo obrigatório'),
+    .min(1, { message: 'Campo obrigatório' })
 })

@@ -1,9 +1,16 @@
 import { z } from "zod";
 
 export const UserValidateSchema = z.object({
-  firstName: z.string().min(1, { message: 'Campo obrigatório' }),
-  lastName: z.string().min(1, { message: 'Campo obrigatório' }),
-  email: z.string().min(1, { message: 'Campo obrigatório' }).email({ message: 'Email inválido' }),
+  firstName: z.string()
+    .min(1, { message: 'Campo obrigatório' })
+    .max(50, { message: 'Nome deve ter no máximo 50 caracteres' }),
+  lastName: z.string()
+    .min(1, { message: 'Campo obrigatório' })
+    .max(50, { message: 'Sobrenome deve ter no máximo 50 caracteres' }),
+  email: z.string()
+    .min(1, { message: 'Campo obrigatório' })
+    .max(60, { message: 'Email deve ter no máximo 60 caracteres' })
+    .email({ message: 'Email inválido' }),
   password: z.string()
     .min(8, { message: 'Senha deve ter entre 8 e 255 caracteres' })
     .max(255, { message: 'Senha deve ter entre 8 e 255 caracteres' })
