@@ -10,7 +10,7 @@ const ZhNavLink = ({ href, label, icon }: ZhNavLinkProps) => {
 
   return (
     <NavLink
-      my={5}
+      my={4}
       fw={530}
       className={classes.navlink}
       href={pathname === href ? undefined : href}

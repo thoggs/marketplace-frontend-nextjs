@@ -4,8 +4,7 @@ import {
   useMantineColorScheme,
   ActionIcon,
   useComputedColorScheme,
-  Burger, Avatar,
-  UnstyledButton, Text
+  Burger,
 } from "@mantine/core";
 import { IconMoon, IconPower, IconSun } from "@tabler/icons-react";
 import React from "react";
@@ -16,12 +15,10 @@ import logo from '../../../../public/img/logo.png';
 import { setThemeColor } from "@/store/slices/themeColorSlice";
 import store from "@/store";
 import { onSubmitSignOut } from "@/app/actions/auth/actions";
-import { useSelector } from "react-redux";
-import { AppState } from "@/store/reducers/rootReducer";
 import { ZhHeaderProps } from "@/shared/components/ZhHeader/types";
+import ZhUserCard from "@/shared/components/ZhUserCard";
 
 export default function ZhHeader({ mobileOpened, desktopOpened, toggleMobile, toggleDesktop }: ZhHeaderProps) {
-  const userProfile = useSelector((state: AppState) => state.userProfile);
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('dark', { getInitialValueInEffect: true });
 
@@ -58,24 +55,7 @@ export default function ZhHeader({ mobileOpened, desktopOpened, toggleMobile, to
         </Flex>
       </Flex>
       <Group className={classes.group}>
-        <UnstyledButton
-          style={{
-            padding: 'var(--mantine-spacing-md)',
-            color: 'var(--mantine-color-text)',
-            borderRadius: 'var(--mantine-radius-sm)',
-          }}>
-          <Group>
-            <Avatar src={userProfile.profileImage} radius="xl"/>
-            <div style={{ flex: 1 }}>
-              <Text size="sm" fw={500}>
-                {userProfile.name}
-              </Text>
-              <Text c="dimmed" size="xs">
-                {userProfile.email}
-              </Text>
-            </div>
-          </Group>
-        </UnstyledButton>
+        <ZhUserCard className={classes.profileCard}/>
         <ActionIcon
           className={classes.switch}
           onClick={onSetThemeColor}

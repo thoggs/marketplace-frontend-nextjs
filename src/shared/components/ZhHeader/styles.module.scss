@@ -15,6 +15,16 @@
   height: auto;
 }
 
+.profileCard {
+  padding-right: var(--mantine-spacing-md);
+  color: var(--mantine-color-text);
+  border-radius: var(--mantine-radius-sm);
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    display: none;
+  }
+}
+
 .textLogo {
   font-weight: 500;
   font-size: 18px;

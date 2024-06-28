@@ -400,7 +400,7 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
     mantineToolbarAlertBannerProps: isLoadingUsersError
       ? {
         color: 'red',
-        children: 'Error loading data',
+        children: 'Erro ao carregar usuários. Tente novamente mais tarde.',
       }
       : undefined,
     onCreatingRowCancel: () => setValidationErrors({}),
