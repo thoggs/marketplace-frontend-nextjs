@@ -1,36 +1,174 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Zhavia Marketplace
 
-## Getting Started
+<p align="center" width="100%">
+    <img width="25%" src="https://www.vectorlogo.zone/logos/reactjs/reactjs-ar21.svg" alt="Node.js Logo">
+    <img width="15%" src="https://www.svgrepo.com/show/354112/nextjs.svg" alt="Express.js Logo">
+</p>
 
-First, run the development server:
+## Descrição
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Este é um projeto de frontend utilizando React e NextJS. Ele inclui a configuração inicial do projeto, componentes
+básicos e rotas para manipulação de dados em um backend.
+
+## Estrutura do Projeto
+
+```
+project-root/
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── (pages)/
+│   │   │   ├── auth/
+│   │   │   │   ├── signin/
+│   │   │   │   └── signup/
+│   │   │   ├── dashboard/
+│   │   │   ├── products/
+│   │   │   └── users/
+│   │   ├── actions/
+│   │   ├── api/
+│   │   ├── auth/
+│   │   ├── hooks/
+│   │   ├── providers/
+│   │   │   ├── auth/
+│   │   │   ├── data/
+│   │   │   ├── query/
+│   │   │   └── store/
+│   │   ├── services/
+│   │   │   └── api/
+│   │   ├── favicon.ico
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── config/
+│   │   ├── app/
+│   │   └── mantine/
+│   ├── shared/
+│   │   ├── components/
+│   │   ├── constants/
+│   │   ├── types/
+│   │   └── validators/
+│   ├── store/
+│   │   ├── reducers/
+│   │   └── slices/
+│   │   ├── index.ts
+│   │   ├── types.ts
+│   │   ├── auth.ts
+│   │   └── middleware.ts
+│   ├── .env.local
+│   └── ...
+├── Dockerfile
+├── docker-compose.yml
+└── ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pré-requisitos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js (v14 ou superior)
+- npm ou yarn (Recomendado v4+, instruções de instalação logo abaixo)
+- Banco de dados MySQL
+- Docker (apenas para inicialização rápida)
+- Docker Compose (apenas para inicialização rápida)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Instalação do Yarn
 
-## Learn More
+Unix/macOS (Necessário ter o Node.js instalado):
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+corepack enable && corepack prepare yarn@stable --activate
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build e Execução
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Observação**: Suba o backend antes de executar o frontend.
 
-## Deploy on Vercel
+### 1. Comando Unificado (clone, instalação de dependências, build e execução)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+git clone https://github.com/thoggs/zhavia-marketplace-frontend.git && cd zhavia-marketplace-frontend && yarn && yarn build && yarn start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 2. Acesse o Projeto:
+
+> O projeto estará disponível em http://localhost:3000
+
+## Inicialização Rápida
+
+Subir o projeto com Docker:
+
+### 1. Comando Unificado (clone e docker-compose)
+
+- **Observação**: Suba o backend antes de executar o frontend.
+
+```bash
+git clone https://github.com/thoggs/zhavia-marketplace-frontend.git && cd zhavia-marketplace-frontend && docker-compose up -d
+```
+
+### 2. Acesse o Projeto:
+
+> O projeto estará disponível em http://localhost:3000
+
+## Configuração para Desenvolvimento
+
+### Passo 1: Clonar o Repositório
+
+```bash
+git clone https://github.com/thoggs/zhavia-marketplace-frontend.git && cd zhavia-marketplace-frontend
+```
+
+### Passo 2: Instalar Dependências
+
+```bash
+npm install
+# ou
+yarn install
+```
+
+### Passo 3: Configurar Variáveis de Ambiente
+
+Crie ou edite o arquivo `.env.local` na raiz do projeto e adicione suas configurações do banco de dados:
+
+```env
+# App configuration
+NEXT_PUBLIC_BASE_URL=http://localhost:8083
+NEXT_TELEMETRY_DISABLED=1
+
+# Auth configuration
+AUTH_TRUST_HOST=true
+AUTH_SECRET=nextjs_secret
+AUTH_GITHUB_ID=sua_id_do_github
+AUTH_GITHUB_SECRET=sua_senha_do_github
+```
+
+### Passo 5: Rodar o Projeto
+
+Para rodar o projeto em modo de desenvolvimento:
+
+```bash
+yarn dev
+# ou
+npm run dev
+```
+
+Para rodar o projeto em modo de produção:
+
+```bash
+npm run build
+# ou
+yarn build
+yarn start
+```
+
+## Tecnologias Utilizadas
+
+- **Next.js**: Runtime JavaScript
+- **React**: Biblioteca JavaScript
+- **TypeScript**: Superconjunto tipado de JavaScript
+- **Axios**: Cliente HTTP para Node.js
+- **Docker**: Plataforma de contêineres
+- **Docker Compose**: Orquestrador de contêineres
+- **Mantine**: Componentes React
+- **React Query**: Biblioteca de gerenciamento de estado
+- **Redux Toolkit**: Biblioteca de gerenciamento de estado
+
+## License
+
+Project license [Apache-2.0](https://opensource.org/license/apache-2-0)
