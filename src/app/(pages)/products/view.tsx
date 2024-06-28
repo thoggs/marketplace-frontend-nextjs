@@ -398,7 +398,7 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
     mantineToolbarAlertBannerProps: isLoadingProductsError
       ? {
         color: 'red',
-        children: 'Error loading data',
+        children: 'Erro ao carregar produtos. Tente novamente mais tarde.',
       }
       : undefined,
     onCreatingRowCancel: () => setValidationErrors({}),

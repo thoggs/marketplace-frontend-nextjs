@@ -23,6 +23,19 @@
   min-height: calc(100vh - 64px);
 }
 
+.profileCard {
+  @media (min-width: $mantine-breakpoint-xs) {
+    display: none;
+  }
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    margin-bottom: var(--mantine-spacing-xl);
+  }
+
+  padding-right: var(--mantine-spacing-md);
+  color: var(--mantine-color-text);
+  border-radius: var(--mantine-radius-sm);
+}
 
 .header {
   align-items: center;

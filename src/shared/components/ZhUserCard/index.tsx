@@ -1,23 +1,25 @@
-import { Avatar, Button, Card, Group, Text } from "@mantine/core";
+import { Avatar, Group, Text, UnstyledButton } from "@mantine/core";
 import React from "react";
-import { useSession } from "next-auth/react";
+import { useSelector } from "react-redux";
+import { AppState } from "@/store/reducers/rootReducer";
+import { ZhUserCardProps } from "@/shared/components/ZhUserCard/types";
 
-export default function ZhUserCard() {
-  const session = useSession();
+export default function ZhUserCard({ className }: ZhUserCardProps) {
+  const userProfile = useSelector((state: AppState) => state.userProfile);
 
   return (
-    <Card withBorder radius='md' p='xs'>
-      <Card.Section withBorder inheritPadding pt='md' pb='xs'>
-        <Group justify='flex-start' gap='xs'>
-          <Avatar src={session.data?.picture}/>
-          <Text fw={500}>
-            {session.data?.user.data.user.firstName} {session.data?.user.data.user.lastName}
+    <UnstyledButton className={className}>
+      <Group>
+        <Avatar src={userProfile.profileImage} radius="xl"/>
+        <div style={{ flex: 1 }}>
+          <Text size="sm" fw={500}>
+            {userProfile.name}
           </Text>
-        </Group>
-      </Card.Section>
-      <Button variant='transparent'>
-        <Text mt='sm' c='dimmed' size='sm'>{session.data?.user.data.user.email}</Text>
-      </Button>
-    </Card>
+          <Text c="dimmed" size="xs">
+            {userProfile.email}
+          </Text>
+        </div>
+      </Group>
+    </UnstyledButton>
   );
 }

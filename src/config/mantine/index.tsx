@@ -1,11 +1,7 @@
 'use client';
 import 'mantine-react-table/styles.css';
 import '@mantine/charts/styles.css';
-import {
-  MantineProvider,
-  AppShell,
-  Stack, Box,
-} from '@mantine/core';
+import { MantineProvider, AppShell, Box, Center, } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import React from 'react';
@@ -19,6 +15,7 @@ import { NAV_LINKS } from "@/config/app/navlinks";
 import ZhToaster from '@/shared/components/ZhToaster';
 import ZhHeader from '@/shared/components/ZhHeader';
 import ZhAutoNavLinks from '@/shared/components/ZhNavLink';
+import ZhUserCard from "@/shared/components/ZhUserCard";
 
 export let metadata: Metadata = {
   title: 'Zhavia - Thiago Rodrigues',
@@ -50,14 +47,10 @@ export default function RootStyleRegistry({ children }: RootLayoutProps) {
             />
           </AppShell.Header>
           <AppShell.Navbar py='lg' px='xs'>
-            <Stack
-              h='100%'
-              align='stretch'
-              justify='space-between'>
-              <Box>
-                <ZhAutoNavLinks links={NAV_LINKS}/>
-              </Box>
-            </Stack>
+            <Center>
+              <ZhUserCard className={classes.profileCard}/>
+            </Center>
+            <ZhAutoNavLinks links={NAV_LINKS}/>
           </AppShell.Navbar>
           <AppShell.Main>
             <Box p='xl'>
