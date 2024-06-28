@@ -88,6 +88,20 @@ git clone https://github.com/thoggs/zhavia-marketplace-frontend.git && cd zhavia
 
 ### 2. Acesse o Projeto:
 
+- Existem duas rotas principais:
+    - **/auth/signin**: Página de login
+    - **/auth/signup**: Página de cadastro
+
+- Você pode acessar a rota **/auth/signin** para fazer login com as seguintes credenciais:
+    - **Usuário**: `user1@example.com`
+    - **Senha**: `Password123!`
+- Ou você pode fazer login usando seu GitHub.
+    - **Observação**: Para fazer login com o GitHub, você precisa configurar as variáveis de ambiente no
+      arquivo `.env.local`, entretanto o projeto já está configurado para fazer login com o GitHub.
+    - **Importante**: Para fazer login com o GitHub, você precisa criar um usuário no `Zhavia Marketplace` com o mesmo
+      e-mail
+      que você usa no GitHub.
+
 > O projeto estará disponível em http://localhost:3000
 
 ## Inicialização Rápida
