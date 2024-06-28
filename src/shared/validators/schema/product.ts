@@ -9,10 +9,11 @@ export const ProductValidateSchema = z.object({
     .max(50, { message: 'Descrição deve ter no máximo 50 caracteres' }),
   price: z.number()
     .positive({ message: 'Preço deve ser maior que zero' })
-    .max(50, { message: 'Preço deve ter no máximo 50 caracteres' }),
+    .max(1000000, { message: 'Preço deve ser menor que 1.000.000' }),
   stock: z.number()
+    .int({ message: 'Estoque deve ser um número inteiro' })
     .positive({ message: 'Estoque deve ser maior que zero' })
-    .max(50, { message: 'Estoque deve ter no máximo 50 caracteres' }),
+    .max(1000000, { message: 'Estoque deve ter no máximo 1.000.000 unidades' }),
   category: z.string()
     .min(1, { message: 'Categoria é obrigatória' })
     .max(50, { message: 'Categoria deve ter no máximo 50 caracteres' }),
