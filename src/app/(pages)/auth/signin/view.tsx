@@ -15,15 +15,16 @@ import {
 import classes from "./styles.module.scss";
 import { IconAt, IconBrandGithub, IconBuildingStore, IconShieldLock } from '@tabler/icons-react';
 import { Form, useForm, zodResolver } from "@mantine/form";
-import { useDisclosure, useViewportSize } from "@mantine/hooks";
+import { useViewportSize } from "@mantine/hooks";
 import { SignInFormType, SignInValidateSchema } from "@/app/(pages)/auth/signin/types";
 import { onSubmitCredentialsSignIn, onSubmitGitHubSignIn } from "@/app/actions/auth/actions";
-import React from "react";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function SigninView() {
   const { height } = useViewportSize();
-  const [ onSubmitCredentialsLoading, hadleCredentials ] = useDisclosure(false);
-  const [ onSubmitGitHubLoading, handleGitHub ] = useDisclosure(false);
+  const [ onSubmitCredentialsLoading, hadleCredentials ] = useState(false);
+  const [ onSubmitGitHubLoading, handleGitHub ] = useState(false);
   const form = useForm<SignInFormType>({
     initialValues: {
       email: String(),
@@ -32,19 +33,30 @@ export default function SigninView() {
     validate: zodResolver(SignInValidateSchema)
   });
 
-  async function submitGitHubSignIn() {
-    handleGitHub.toggle()
-    form.reset();
-    await onSubmitGitHubSignIn()
-      .finally(handleGitHub.toggle);
-  }
-
   async function submitCredentialsSignIn() {
     form.validate();
-    if (form.isValid()) {
-      hadleCredentials.toggle()
-      await onSubmitCredentialsSignIn(form.values.email, form.values.password)
-        .finally(hadleCredentials.toggle);
+    try {
+      if (form.isValid()) {
+        hadleCredentials(true);
+        await onSubmitCredentialsSignIn(form.values.email, form.values.password);
+      }
+    } catch (error) {
+      form.setErrors({
+        email: 'Email ou senha inválidos',
+        password: 'Email ou senha inválidos'
+      });
+      hadleCredentials(false);
+    }
+  }
+
+  async function submitGitHubSignIn() {
+    handleGitHub(true);
+    form.reset();
+    try {
+      await onSubmitGitHubSignIn();
+    } catch (error) {
+      toast.error('Erro ao tentar autenticar com GitHub');
+      handleGitHub(false);
     }
   }
 
