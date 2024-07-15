@@ -1,4 +1,4 @@
-# Zhavia Marketplace
+# Virtual Mall
 
 <p align="center" width="100%">
     <img width="25%" src="https://www.vectorlogo.zone/logos/reactjs/reactjs-ar21.svg" alt="Node.js Logo">
