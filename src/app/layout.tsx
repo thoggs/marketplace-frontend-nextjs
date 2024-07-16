@@ -13,7 +13,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang='pt-BR'>
     <head>
-      <title>Zhavia</title>
+      <title>CodeSumn Marketplace</title>
       <link rel="icon" href="/favicon.ico" sizes="any"/>
       <ColorSchemeScript defaultColorScheme='auto'/>
     </head>

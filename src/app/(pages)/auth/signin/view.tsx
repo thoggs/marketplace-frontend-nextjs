@@ -2,7 +2,6 @@
 import Image from "next/image";
 import {
   Anchor,
-  Box,
   Button,
   Container, Flex,
   Grid,
@@ -99,8 +98,8 @@ export default function SigninView() {
                 direction="column">
                 <Image
                   priority
-                  width={130}
-                  height={130}
+                  width={120}
+                  height={120}
                   src='/img/logo.png'
                   alt='logo img'/>
                 <Text className={classes.textLogo} variant="h6">CodeSumn®</Text>
