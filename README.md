@@ -83,7 +83,7 @@ corepack enable && corepack prepare yarn@stable --activate
 ### 1. Comando Unificado (clone, instalação de dependências, build e execução)
 
 ```bash
-git clone https://github.com/thoggs/zhavia-marketplace-frontend.git && cd zhavia-marketplace-frontend && yarn && yarn build && yarn start
+git clone https://github.com/thoggs/virtual-mall-frontend-nextjs.git && cd virtual-mall-frontend-nextjs && yarn && yarn build && yarn start
 ```
 
 ### 2. Acesse o Projeto:
@@ -95,13 +95,13 @@ git clone https://github.com/thoggs/zhavia-marketplace-frontend.git && cd zhavia
 - Você pode acessar a rota **/auth/signin** para fazer login com as seguintes credenciais:
     - **Usuário**: `user1@example.com`
     - **Senha**: `Password123!`
-      
+
 - Ou você pode fazer login usando seu GitHub.
-  
+
     - **Importante**: Para fazer login com o GitHub, você precisa configurar as variáveis de ambiente no
       arquivo `.env.local`, entretanto o projeto já está configurado para fazer login com o GitHub.
-      
-    - **Importante**: Para fazer login com o GitHub, você precisa criar um usuário no `Zhavia Marketplace` com o mesmo
+
+    - **Importante**: Para fazer login com o GitHub, você precisa criar um usuário no `Marketplace` com o mesmo
       e-mail
       que você usa no GitHub.
 
@@ -116,7 +116,7 @@ Subir o projeto com Docker:
 - **Observação**: Suba o backend antes de executar o frontend.
 
 ```bash
-git clone https://github.com/thoggs/zhavia-marketplace-frontend.git && cd zhavia-marketplace-frontend && docker-compose up -d
+git clone https://github.com/thoggs/virtual-mall-frontend-nextjs.git && cd virtual-mall-frontend-nextjs && docker-compose up -d
 ```
 
 ### 2. Acesse o Projeto:
@@ -128,7 +128,7 @@ git clone https://github.com/thoggs/zhavia-marketplace-frontend.git && cd zhavia
 ### Passo 1: Clonar o Repositório
 
 ```bash
-git clone https://github.com/thoggs/zhavia-marketplace-frontend.git && cd zhavia-marketplace-frontend
+git clone https://github.com/thoggs/virtual-mall-frontend-nextjs.git && cd virtual-mall-frontend-nextjs
 ```
 
 ### Passo 2: Instalar Dependências
