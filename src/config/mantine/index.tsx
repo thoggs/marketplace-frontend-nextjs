@@ -18,7 +18,7 @@ import ZhAutoNavLinks from '@/shared/components/ZhNavLink';
 import ZhUserCard from "@/shared/components/ZhUserCard";
 
 export let metadata: Metadata = {
-  title: 'Zhavia - Thiago Rodrigues',
+  title: 'CodeSumn - Thiago Rodrigues',
 }
 
 export default function RootStyleRegistry({ children }: RootLayoutProps) {
