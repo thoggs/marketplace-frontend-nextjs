@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { ROLES } from "@/shared/constants/roles";
+
+const roleValues = ROLES.map(r => r.value);
 
 export const UserValidateSchema = z.object({
   firstName: z.string()
@@ -11,6 +14,12 @@ export const UserValidateSchema = z.object({
     .min(1, { message: 'Campo obrigatório' })
     .max(60, { message: 'Email deve ter no máximo 60 caracteres' })
     .email({ message: 'Email inválido' }),
+  role: z.string()
+    .min(1, { message: 'Campo obrigatório' })
+    .max(50, { message: 'Permissão deve ter no máximo 50 caracteres' })
+    .refine(value => roleValues.includes(value), {
+      message: 'Permissão inválida',
+    }),
   password: z.string()
     .min(8, { message: 'Senha deve ter entre 8 e 255 caracteres' })
     .max(255, { message: 'Senha deve ter entre 8 e 255 caracteres' })
@@ -18,7 +27,8 @@ export const UserValidateSchema = z.object({
     .regex(/[a-z]/, { message: 'Senha deve incluir letras minúsculas' })
     .regex(/[0-9]/, { message: 'Senha deve incluir números' })
     .regex(/[^a-zA-Z0-9]/, { message: 'Senha deve incluir caracteres especiais' }),
-  confirmPassword: z.string().min(1, { message: 'Campo obrigatório' }),
+  confirmPassword: z.string()
+    .min(1, { message: 'Campo obrigatório' }),
 }).refine(data => data.password === data.confirmPassword, {
   message: 'As senhas não coincidem',
   path: [ 'confirmPassword' ],

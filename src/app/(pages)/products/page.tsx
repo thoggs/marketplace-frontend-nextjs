@@ -6,19 +6,23 @@ import { URI_PATH } from "@/shared/constants/path";
 
 export default async function ProductsPage() {
   const apiService = await initApiService();
+  const emptyData: MainResponseWithPagination<Product> = {} as MainResponseWithPagination<Product>;
 
   async function fetchProducts() {
     try {
       const response = await apiService.list<MainResponseWithPagination<Product>>(URI_PATH.API.PRODUCTS, {
         pageSize: 50,
       });
-      return response.data;
+      if (response && response.data && response.data.length > 0) {
+        return response;
+      }
+      return emptyData;
     } catch (error) {
       console.error(error);
-      return [];
+      return emptyData;
     }
   }
 
-  const products = await fetchProducts();
-  return <ProductsView initialProducts={products}/>
+  const data = await fetchProducts();
+  return <ProductsView initialData={data}/>
 }

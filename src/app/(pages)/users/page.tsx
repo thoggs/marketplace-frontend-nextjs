@@ -6,19 +6,23 @@ import { URI_PATH } from "@/shared/constants/path";
 
 export default async function UsersPage() {
   const apiService = await initApiService();
+  const emptyData: MainResponseWithPagination<User> = {} as MainResponseWithPagination<User>;
 
-  async function getUsers() {
+  async function fetchInitialData() {
     try {
       const response = await apiService.list<MainResponseWithPagination<User>>(URI_PATH.API.USERS, {
         pageSize: 50,
       });
-      return response.data;
+      if (response && response.data && response.data.length > 0) {
+        return response;
+      }
+      return emptyData;
     } catch (error) {
       console.error(error);
-      return [];
+      return emptyData;
     }
   }
 
-  const users = await getUsers();
-  return <UsersView initialUsers={users}/>;
+  const data = await fetchInitialData();
+  return <UsersView initialData={data}/>;
 }

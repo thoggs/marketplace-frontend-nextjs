@@ -4,7 +4,7 @@ import {
   useMantineColorScheme,
   ActionIcon,
   useComputedColorScheme,
-  Burger,
+  Burger, Text,
 } from "@mantine/core";
 import { IconMoon, IconPower, IconSun } from "@tabler/icons-react";
 import React from "react";
@@ -50,8 +50,9 @@ export default function ZhHeader({ mobileOpened, desktopOpened, toggleMobile, to
             priority
             className={classes.logoImg}
             src={logo}
-            alt='Zhavia logo'
+            alt='CodeSumn logo'
           />
+          <Text className={classes.textLogo} variant="h6">CodeSumn®</Text>
         </Flex>
       </Flex>
       <Group className={classes.group}>
