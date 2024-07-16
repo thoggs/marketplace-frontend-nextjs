@@ -4,7 +4,7 @@ import {
   Anchor,
   Box,
   Button,
-  Container,
+  Container, Flex,
   Grid,
   Input,
   PasswordInput,
@@ -92,14 +92,19 @@ export default function SigninView() {
               align="center"
               justify="center"
               gap="md">
-              <Box mb='xl'>
+              <Flex
+                gap="xl"
+                justify="center"
+                align="center"
+                direction="column">
                 <Image
                   priority
-                  width={200}
-                  height={67}
+                  width={130}
+                  height={130}
                   src='/img/logo.png'
                   alt='logo img'/>
-              </Box>
+                <Text className={classes.textLogo} variant="h6">CodeSumn®</Text>
+              </Flex>
               <Input
                 {...form.getInputProps('email')}
                 name='email'

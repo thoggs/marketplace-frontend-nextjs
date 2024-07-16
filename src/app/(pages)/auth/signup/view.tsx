@@ -58,8 +58,8 @@ export default function SignUpView() {
               return <Text fw={500}>Usuário cadastrado com sucesso!</Text>
             },
             error: (error: AxiosError<MainResponse<[]>>) => {
-              error.response?.data?.metadata.message.email?.forEach((emailError: string) => {
-                if (emailError.includes('email')) {
+              error.response?.data?.metadata.messages?.forEach((error) => {
+                if (error.errorCode.includes('EMAIL_ALREADY_EXISTS')) {
                   // setValidationErrors({
                   //   ...validationErrors,
                   //   email: 'Email já cadastrado',

@@ -1,14 +1,24 @@
 export type MainResponse<T> = {
   success: boolean;
-  metadata: any;
-  data: T;
+  metadata: Metadata;
+  data: T & { accessToken: string };
 }
 
 export type MainResponseWithPagination<T> = {
   data: T[];
   success: boolean;
-  metadata: any;
+  metadata: Metadata;
+}
+
+export type Metadata = {
+  messages: ErrorMessageResponse[];
   pagination: Pagination;
+}
+
+type ErrorMessageResponse = {
+  errorCode: string;
+  errorMessage: string;
+  field: string;
 }
 
 type Pagination = {
@@ -23,16 +33,3 @@ type Pagination = {
     next: string | null;
   }
 }
-
-export type ErrorResponse<T> = {
-  message: T;
-}
-
-export type ErrorResponseMessage = {
-  firstName: string[];
-  lastName: string[];
-  email: string[];
-  age: string[];
-  birthDate: string[];
-  hobby: string[];
-};

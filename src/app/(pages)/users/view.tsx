@@ -24,8 +24,9 @@ import useUserValidation from "@/shared/validators/hooks/useUserValidation";
 import { User } from '@/shared/types/response/user';
 import { MainResponse, MainResponseWithPagination } from "@/shared/types/response/dto";
 import { URI_PATH } from "@/shared/constants/path";
+import { ROLES } from "@/shared/constants/roles";
 
-export default function UsersView({ initialUsers }: UsersViewProps) {
+export default function UsersView({ initialData }: UsersViewProps) {
   const session = useSession();
   const [ globalFilter, setGlobalFilter ] = useState(String());
   const [ sorting, setSorting ] = useState<MRT_SortingState>([]);
@@ -36,7 +37,7 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
   const { show, list, create, update, destroy } = useRequest();
   const queryClient = useQueryClient();
   const { validateUser, validationErrors, setValidationErrors } = useUserValidation();
-  const [ rowCount, setRowCount ] = useState<number>()
+  const [ rowCount, setRowCount ] = useState<number>(initialData.metadata.pagination.totalItems)
   const {
     data: fetchedUsers = [],
     isError: isLoadingUsersError,
@@ -96,6 +97,36 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
         },
       },
       {
+        accessorKey: 'role',
+        header: 'Permissão',
+        editVariant: 'select',
+        mantineEditTextInputProps: {
+          type: 'text',
+          required: true,
+          error: validationErrors?.role,
+          onFocus: () =>
+            setValidationErrors({
+              ...validationErrors,
+              role: undefined,
+            }),
+        },
+        mantineEditSelectProps: {
+          data: ROLES,
+          error: validationErrors?.role,
+          onFocus: () =>
+            setValidationErrors({
+              ...validationErrors,
+              role: undefined,
+            }),
+        },
+        Cell: ({ cell }) => {
+          const role = cell.getValue<string>();
+          const roleLabel = ROLES
+            .find(r => r.value.toLowerCase() === role.toLowerCase())?.label || 'Não especificado';
+          return <span>{roleLabel}</span>;
+        },
+      },
+      {
         accessorKey: 'password',
         header: 'Senha',
         mantineEditTextInputProps: {
@@ -143,22 +174,23 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
         globalFilter,
         sorting
       ],
-      initialData: initialUsers,
+      initialData: initialData.data,
       placeholderData: keepPreviousData,
       staleTime: !!session.data?.user.data.accessToken ? 0 : Infinity,
       refetchIntervalInBackground: true,
       queryFn: async () => {
+        const sortingParam = sorting ? encodeURIComponent(JSON.stringify(sorting)) : [];
         const response = await list<MainResponseWithPagination<User>>(URI_PATH.API.USERS, {
           params: {
             page: pagination.pageIndex + 1,
             pageSize: pagination.pageSize,
             searchTerm: globalFilter,
-            sorting: JSON.stringify(sorting ?? []),
+            sorting: sortingParam,
           },
         });
 
-        setRowCount(response.data.pagination.totalItems);
-        return (response.data.data);
+        setRowCount(response.data.metadata.pagination.totalItems);
+        return response.data.data;
       },
     });
   }
@@ -166,42 +198,37 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
   function useCreateUser() {
     return useMutation({
       mutationFn: async (user: User) => {
-        console.log('TESTE')
         const req = create<User>(URI_PATH.API.USERS, user).then(response => response.data);
-
         await toast.promise(
           req,
           {
             loading: 'Cadastrando usuário...',
             success: <Text fw={500}>Cadastrado com sucesso!</Text>,
-            error: (error: AxiosError<MainResponse<[]>>) => {
-              error.response?.data?.metadata.message.email?.forEach((emailError: string) => {
-                if (emailError.includes('email')) {
-                  setValidationErrors({
-                    ...validationErrors,
-                    email: 'Email já cadastrado',
-                  });
-                }
-              });
-              return <Text fw={500}>Erro ao cadastrar usuário!</Text>
-            },
-          },
+            error: 'Erro ao cadastrar usuário!',
+          }
         );
-
         return req;
       },
       onMutate: (newUserInfo: User) => {
-        queryClient.setQueryData(
-          [ 'users' ],
-          (prevUsers: User[] | undefined) => [
-            ...(prevUsers || []),
-            {
-              ...newUserInfo,
-            },
-          ]
-        );
+        queryClient.setQueryData([ 'users' ], (prevUsers: User[] | undefined) => [
+          ...(prevUsers || []),
+          {
+            ...newUserInfo,
+          },
+        ]);
       },
-      onSettled: () => queryClient.invalidateQueries({ queryKey: [ 'users' ] }),
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: [ 'users' ] }).then();
+      },
+      onError: (error: AxiosError<MainResponse<User>>) => {
+        error.response?.data.metadata.messages.forEach((message) => {
+          if (message.errorCode === 'EMAIL_ALREADY_EXISTS')
+            setValidationErrors({
+              ...validationErrors,
+              email: 'Email já cadastrado!',
+            });
+        });
+      },
     });
   }
 
@@ -209,26 +236,14 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
     return useMutation({
       mutationFn: async (user: User) => {
         const req = update<User>(URI_PATH.API.USERS, user.id, user).then(response => response.data);
-
         await toast.promise(
           req,
           {
             loading: 'Atualizando usuário...',
             success: <Text fw={500}>Atualizado com sucesso!</Text>,
-            error: (error: AxiosError<MainResponse<[]>>) => {
-              error.response?.data?.metadata.message.email?.forEach((emailError: string) => {
-                if (emailError.includes('email')) {
-                  setValidationErrors({
-                    ...validationErrors,
-                    email: 'Email já cadastrado',
-                  });
-                }
-              });
-              return <Text fw={500}>Erro ao atualizar usuário!</Text>;
-            },
+            error: 'Erro ao atualizar usuário!',
           }
         );
-
         return req;
       },
       onMutate: (newUserInfo: User) => {
@@ -241,6 +256,15 @@ export default function UsersView({ initialUsers }: UsersViewProps) {
         );
       },
       onSettled: () => queryClient.invalidateQueries({ queryKey: [ 'users' ] }),
+      onError: (error: AxiosError<MainResponse<User>>) => {
+        error.response?.data.metadata.messages.forEach((message) => {
+          if (message.errorCode === 'EMAIL_ALREADY_EXISTS')
+            setValidationErrors({
+              ...validationErrors,
+              email: 'Email já cadastrado!',
+            });
+        });
+      },
     });
   }
 

@@ -25,7 +25,7 @@ import { Product } from "@/shared/types/response/product";
 import { URI_PATH } from "@/shared/constants/path";
 import { MainResponse, MainResponseWithPagination } from "@/shared/types/response/dto";
 
-export default function ProductsView({ initialProducts }: ProductsViewProps) {
+export default function ProductsView({ initialData }: ProductsViewProps) {
   const session = useSession();
   const [ globalFilter, setGlobalFilter ] = useState(String());
   const [ sorting, setSorting ] = useState<MRT_SortingState>([]);
@@ -36,7 +36,7 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
   const { show, list, create, update, destroy } = useRequest();
   const queryClient = useQueryClient();
   const { validateProduct, validationErrors, setValidationErrors } = useProductValidation();
-  const [ rowCount, setRowCount ] = useState<number>()
+  const [ rowCount, setRowCount ] = useState<number>(initialData.metadata?.pagination.totalItems);
   const {
     data: fetchedProducts = [],
     isError: isLoadingProductsError,
@@ -143,20 +143,21 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
         globalFilter,
         sorting
       ],
-      initialData: initialProducts,
+      initialData: initialData.data,
       placeholderData: keepPreviousData,
       staleTime: !!session.data?.user.data.accessToken ? 0 : Infinity,
       queryFn: async () => {
+        const sortingParam = sorting ? encodeURIComponent(JSON.stringify(sorting)) : [];
         const response = await list<MainResponseWithPagination<Product>>(URI_PATH.API.PRODUCTS, {
           params: {
             page: pagination.pageIndex + 1,
             pageSize: pagination.pageSize,
             searchTerm: globalFilter,
-            sorting: JSON.stringify(sorting ?? []),
+            sorting: sortingParam,
           },
         });
 
-        setRowCount(response.data.pagination.totalItems);
+        setRowCount(response.data.metadata.pagination.totalItems);
         return (response.data.data);
       },
     });
@@ -172,17 +173,7 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
           {
             loading: 'Cadastrando produto...',
             success: <Text fw={500}>Cadastrado com sucesso!</Text>,
-            error: (error: AxiosError<MainResponse<[]>>) => {
-              error.response?.data?.metadata.message.email?.forEach((emailError: string) => {
-                if (emailError.includes('email')) {
-                  setValidationErrors({
-                    ...validationErrors,
-                    email: 'Email já cadastrado',
-                  });
-                }
-              });
-              return <Text fw={500}>Erro ao cadastrar produto!</Text>
-            },
+            error: 'Erro ao cadastrar produto!',
           },
         );
 
@@ -200,6 +191,15 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
         );
       },
       onSettled: () => queryClient.invalidateQueries({ queryKey: [ 'products' ] }),
+      onError: (error: AxiosError<MainResponse<Product>>) => {
+        error.response?.data.metadata.messages.forEach((message) => {
+          if (message.errorCode === 'VALIDATION_ERROR')
+            setValidationErrors({
+              ...validationErrors,
+              name: 'Dados inválidos, verifique os campos!',
+            });
+        });
+      },
     });
   }
 
@@ -213,17 +213,7 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
           {
             loading: 'Atualizando produto...',
             success: <Text fw={500}>Atualizado com sucesso!</Text>,
-            error: (error: AxiosError<MainResponse<[]>>) => {
-              error.response?.data?.metadata.message.email?.forEach((emailError: string) => {
-                if (emailError.includes('email')) {
-                  setValidationErrors({
-                    ...validationErrors,
-                    email: 'Email já cadastrado',
-                  });
-                }
-              });
-              return <Text fw={500}>Erro ao atualizar produto!</Text>;
-            },
+            error: 'Erro ao atualizar produto!',
           }
         );
 
@@ -239,6 +229,15 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
         );
       },
       onSettled: () => queryClient.invalidateQueries({ queryKey: [ 'products' ] }),
+      onError: (error: AxiosError<MainResponse<Product>>) => {
+        error.response?.data.metadata.messages.forEach((message) => {
+          if (message.errorCode === 'VALIDATION_ERROR')
+            setValidationErrors({
+              ...validationErrors,
+              name: 'Dados inválidos, verifique os campos!',
+            });
+        });
+      },
     });
   }
 
@@ -442,7 +441,7 @@ export default function ProductsView({ initialProducts }: ProductsViewProps) {
         onClick={() => {
           table.setCreatingRow(true);
         }}>
-        Adicionar Usuário
+        Adicionar Produto
       </Button>
     ),
   });
