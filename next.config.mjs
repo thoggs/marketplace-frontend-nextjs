@@ -4,7 +4,7 @@ const nextConfig = {
     sassOptions: {
         prependData: `@import "./_mantine.scss";`,
     },
-    output: 'standalone',
+    // output: 'standalone',
 };
 
 export default nextConfig;

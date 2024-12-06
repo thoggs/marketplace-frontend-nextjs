@@ -11,7 +11,7 @@ services:
     environment:
       NODE_ENV: production
       NEXT_TELEMETRY_DISABLED: 1
-      NEXT_PUBLIC_BASE_URL: 'http://localhost:8083'
+      NEXT_PUBLIC_BASE_URL: 'http://localhost:8080'
       AUTH_TRUST_HOST: true
       AUTH_SECRET: 'Xk9kG5R2fI2r2fYjqM3OUClnHQB3igtEqXv2NdpzHrY='
       AUTH_GITHUB_ID: 'Ov23li9ogKkhK6oszaIc'

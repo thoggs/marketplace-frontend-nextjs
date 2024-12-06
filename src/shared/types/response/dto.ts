@@ -1,6 +1,6 @@
 export type MainResponse<T> = {
   success: boolean;
-  metadata: Metadata;
+  metadata: Metadata[];
   data: T & { accessToken: string };
 }
 

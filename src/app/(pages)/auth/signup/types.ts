@@ -3,5 +3,5 @@ export type UserFormType = {
   lastName: string,
   email: string,
   password: string,
-  confirmPassword: string,
+  confirmPassword: string
 }
