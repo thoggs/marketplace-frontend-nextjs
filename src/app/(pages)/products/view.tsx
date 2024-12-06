@@ -192,7 +192,7 @@ export default function ProductsView({ initialData }: ProductsViewProps) {
       },
       onSettled: () => queryClient.invalidateQueries({ queryKey: [ 'products' ] }),
       onError: (error: AxiosError<MainResponse<Product>>) => {
-        error.response?.data.metadata.messages.forEach((message) => {
+        error.response?.data.metadata[0].messages.forEach((message) => {
           if (message.errorCode === 'VALIDATION_ERROR')
             setValidationErrors({
               ...validationErrors,
@@ -230,7 +230,7 @@ export default function ProductsView({ initialData }: ProductsViewProps) {
       },
       onSettled: () => queryClient.invalidateQueries({ queryKey: [ 'products' ] }),
       onError: (error: AxiosError<MainResponse<Product>>) => {
-        error.response?.data.metadata.messages.forEach((message) => {
+        error.response?.data.metadata[0].messages.forEach((message) => {
           if (message.errorCode === 'VALIDATION_ERROR')
             setValidationErrors({
               ...validationErrors,

@@ -221,7 +221,7 @@ export default function UsersView({ initialData }: UsersViewProps) {
         queryClient.invalidateQueries({ queryKey: [ 'users' ] }).then();
       },
       onError: (error: AxiosError<MainResponse<User>>) => {
-        error.response?.data.metadata.messages.forEach((message) => {
+        error.response?.data.metadata[0].messages.forEach((message) => {
           if (message.errorCode === 'EMAIL_ALREADY_EXISTS')
             setValidationErrors({
               ...validationErrors,
@@ -257,7 +257,7 @@ export default function UsersView({ initialData }: UsersViewProps) {
       },
       onSettled: () => queryClient.invalidateQueries({ queryKey: [ 'users' ] }),
       onError: (error: AxiosError<MainResponse<User>>) => {
-        error.response?.data.metadata.messages.forEach((message) => {
+        error.response?.data.metadata[0].messages.forEach((message) => {
           if (message.errorCode === 'EMAIL_ALREADY_EXISTS')
             setValidationErrors({
               ...validationErrors,

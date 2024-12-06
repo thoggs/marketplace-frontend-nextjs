@@ -25,11 +25,13 @@ import React, { useState } from "react";
 import { UserFormType } from "@/app/(pages)/auth/signup/types";
 import { UserValidateSchema } from "@/shared/validators/schema/user";
 import { MainResponse } from "@/shared/types/response/dto";
+import useUserValidation from "@/shared/validators/hooks/useUserValidation";
 
 export default function SignUpView() {
   const { create } = useRequest();
   const { height } = useViewportSize();
   const router = useRouter();
+  const { validationErrors, setValidationErrors } = useUserValidation();
   const [ onSubmitLoading, setSubmitLoading ] = useState(false);
   const form = useForm<UserFormType>({
     initialValues: {
@@ -58,12 +60,13 @@ export default function SignUpView() {
               return <Text fw={500}>Usuário cadastrado com sucesso!</Text>
             },
             error: (error: AxiosError<MainResponse<[]>>) => {
-              error.response?.data?.metadata.messages?.forEach((error) => {
-                if (error.errorCode.includes('EMAIL_ALREADY_EXISTS')) {
-                  // setValidationErrors({
-                  //   ...validationErrors,
-                  //   email: 'Email já cadastrado',
-                  // });
+              error.response?.data?.metadata?.forEach((e) => {
+                if (e.messages[0].errorCode === 'EMAIL_ALREADY_EXISTS') {
+                  setValidationErrors({
+                    ...validationErrors,
+                    email: 'Email já cadastrado',
+                  });
+                  form.validate();
                 }
               });
               return <Text fw={500}>Erro ao cadastrar usuário!</Text>
