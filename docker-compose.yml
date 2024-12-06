@@ -1,13 +1,13 @@
 services:
   nextjs:
-    container_name: codesumn-marketplace-frontend-app
+    container_name: marketplace-frontend-app
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     networks:
-      - codesumn-marketplace-network
+      - marketplace-network
     environment:
       NODE_ENV: production
       NEXT_TELEMETRY_DISABLED: 1
@@ -19,5 +19,5 @@ services:
     restart: unless-stopped
 
 networks:
-  codesumn-marketplace-network:
+  marketplace-network:
     driver: bridge
