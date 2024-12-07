@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: nextjs
+          image: marketplace-frontend-nextjs:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+            requests:
+              cpu: "250m"
+              memory: "500Mi"
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: NEXT_TELEMETRY_DISABLED
+              value: "1"
+            - name: NEXT_PUBLIC_BASE_URL
+              value: "http://marketplace-stack-nginx"
+            - name: AUTH_TRUST_HOST
+              value: "true"
+            - name: AUTH_SECRET
+              value: "8cf9545ca93c4c5011f3dd2b348e6d66"
+            - name: AUTH_GITHUB_ID
+              value: "Ov23li9ogKkhK6oszaIc"
+            - name: AUTH_GITHUB_SECRET
+              value: "70662919b3db5cc0884105618f3c49fdadcafa8b"
