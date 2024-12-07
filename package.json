@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/ && node .next/standalone/server.js",
     "lint": "next lint"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
     "react-hot-toast": "^2.4.1",
     "react-redux": "^9.1.2",
     "recharts": "^2.14.1",
+    "sharp": "^0.33.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
