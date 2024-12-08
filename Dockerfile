@@ -9,7 +9,7 @@ RUN apk add --no-cache libc6-compat
 COPY package.json yarn.lock* .yarnrc.yml ./
 
 RUN corepack enable && corepack prepare yarn@stable --activate
-RUN yarn --frozen-lockfile
+RUN yarn
 
 FROM base AS builder
 

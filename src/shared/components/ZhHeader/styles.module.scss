@@ -1,4 +1,4 @@
-@import '../../../../mantine';
+@use '../../../../mantine' as mantine;
 
 .group {
   height: 100%;
@@ -20,7 +20,7 @@
   color: var(--mantine-color-text);
   border-radius: var(--mantine-radius-sm);
 
-  @media (max-width: $mantine-breakpoint-xs) {
+  @media (max-width: mantine.$mantine-breakpoint-xs) {
     display: none;
   }
 }
@@ -32,27 +32,27 @@
 }
 
 .icon {
-  width: rem(22px);
-  height: rem(22px);
+  width: mantine.rem(22px);
+  height: mantine.rem(22px);
 }
 
 .dark {
-  @include dark {
+  @include mantine.dark {
     display: none;
   }
 
-  @include light {
+  @include mantine.light {
     display: block;
     color: var(--mantine-color-blue-6);
   }
 }
 
 .light {
-  @include light {
+  @include mantine.light {
     display: none;
   }
 
-  @include dark {
+  @include mantine.dark {
     display: block;
     color: var(--mantine-color-yellow-4);
   }
