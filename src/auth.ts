@@ -22,8 +22,8 @@ declare module "next-auth" {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     GitHub({
-      clientId: `${process.env.AUTH_GITHUB_CLIENT_ID}`,
-      clientSecret: `${process.env.AUTH_GITHUB_CLIENT_SECRET}`,
+      clientId: process.env.AUTH_GITHUB_CLIENT_ID,
+      clientSecret: process.env.AUTH_GITHUB_CLIENT_SECRET,
     }),
     Credentials({
       credentials: {
@@ -31,6 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       authorize: async (credentials) => {
+        console.info(`${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN}`)
         const authResponse = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN}`, {
             method: 'POST',
@@ -53,6 +54,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account, user }) {
+      console.info(`${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN_GITHUB}`)
       if (account?.access_token) {
         const githubAuth = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN_GITHUB}`, {
@@ -73,9 +75,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       user && (token.user = { ...user } as any)
       return token
     },
-    async signIn({ account, user, credentials }) {
+    async signIn({ account, credentials }) {
+      console.info(`${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN_GITHUB}`)
       if (!credentials) {
-        console.log(account?.access_token)
         const githubAuth = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN_GITHUB}`, {
             method: 'POST',

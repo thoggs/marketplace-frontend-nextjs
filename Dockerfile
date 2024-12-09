@@ -16,8 +16,9 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN corepack enable && corepack prepare yarn@stable --activate
+RUN mkdir -p /app/.next/cache && chown -R node:node /app/.next/cache
 RUN mkdir -p /app/.next/cache/images && chown -R node:node /app/.next/cache
+RUN corepack enable && corepack prepare yarn@stable --activate
 RUN yarn build
 RUN cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/
 

@@ -9,13 +9,14 @@ services:
     networks:
       - marketplace-network
     environment:
-      NODE_ENV: production
-      NEXT_TELEMETRY_DISABLED: 1
-      NEXT_PUBLIC_BASE_URL: 'http://localhost:8080'
-      AUTH_TRUST_HOST: true
+      NODE_ENV: 'production'
+      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_PUBLIC_BASE_URL: 'http://marketplace-backend-app:8080'
+      NEXTAUTH_URL: 'http://localhost:3000'
+      AUTH_TRUST_HOST: 'true'
       AUTH_SECRET: '8cf9545ca93c4c5011f3dd2b348e6d66'
       AUTH_GITHUB_CLIENT_ID: 'Ov23li9ogKkhK6oszaIc'
-      AUTH_GITHUB_CLIENT_SECRET: '1354294712d4b739107f6d77848b57222f1edb8f'
+      AUTH_GITHUB_CLIENT_SECRET: 'c994ab85f6ae1dee4da6159a2d4c5fd1d7b80520'
     restart: unless-stopped
 
 networks:
