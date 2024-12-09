@@ -33,6 +33,8 @@ RUN mkdir -p .next && chown nextjs:nodejs .next
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/public ./public
 
+RUN mkdir -p /app/.next/cache/images && chown -R nextjs:nodejs /app
+
 USER nextjs
 
 ENV HOSTNAME "0.0.0.0"
