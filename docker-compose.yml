@@ -1,45 +1,23 @@
 services:
-  nextjs:
-    image: marketplace-frontend-nextjs:latest
+  app:
+    container_name: marketplace-frontend-app
     build:
       context: .
       dockerfile: Dockerfile
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 1G
-        reservations:
-          cpus: "0.25"
-          memory: 500M
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-      update_config:
-        parallelism: 1
-        delay: 10s
-        failure_action: rollback
-        monitor: 60s
-        max_failure_ratio: 0.3
-      rollback_config:
-        parallelism: 1
-        delay: 10s
-        monitor: 60s
     ports:
       - "3000:3000"
     networks:
       - marketplace-network
     environment:
-      NODE_ENV: production
-      NEXT_TELEMETRY_DISABLED: "1"
-      NEXT_PUBLIC_BASE_URL: http://marketplace-stack_nginx
-      AUTH_TRUST_HOST: "true"
-      AUTH_SECRET: 8cf9545ca93c4c5011f3dd2b348e6d66
-      AUTH_GITHUB_ID: Ov23li9ogKkhK6oszaIc
-      AUTH_GITHUB_SECRET: 70662919b3db5cc0884105618f3c49fdadcafa8b
+      NODE_ENV: 'production'
+      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_PUBLIC_BASE_URL: 'http://marketplace-backend-app:8080'
+      NEXTAUTH_URL: 'http://localhost:3000'
+      AUTH_TRUST_HOST: 'true'
+      AUTH_SECRET: '8cf9545ca93c4c5011f3dd2b348e6d66'
+      AUTH_GITHUB_CLIENT_ID: 'Ov23li9ogKkhK6oszaIc'
+      AUTH_GITHUB_CLIENT_SECRET: 'c994ab85f6ae1dee4da6159a2d4c5fd1d7b80520'
+    restart: unless-stopped
 
 networks:
   marketplace-network:

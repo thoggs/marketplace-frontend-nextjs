@@ -2,7 +2,8 @@
 
 const nextConfig = {
     sassOptions: {
-        prependData: `@import "./_mantine.scss";`,
+        prependData: `@use "./_mantine.scss" as *;`,
+        silenceDeprecations: ["legacy-js-api"],
     },
     output: 'standalone',
 };

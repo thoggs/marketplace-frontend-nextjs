@@ -1,4 +1,4 @@
-@import '../../../mantine';
+@use '../../../mantine' as mantine;
 
 @mixin dark-background {
   background-color: rgba(5, 6, 9, 0.6);
@@ -9,11 +9,11 @@
 }
 
 .appShell {
-  @include dark {
+  @include mantine.dark {
     @include dark-background;
   }
 
-  @include light {
+  @include mantine.light {
     @include light-background;
   }
 }
@@ -24,17 +24,17 @@
 }
 
 .profileCard {
-  @media (min-width: $mantine-breakpoint-xs) {
-    display: none;
-  }
-
-  @media (max-width: $mantine-breakpoint-xs) {
-    margin-bottom: var(--mantine-spacing-xl);
-  }
-
   padding-right: var(--mantine-spacing-md);
   color: var(--mantine-color-text);
   border-radius: var(--mantine-radius-sm);
+
+  @media (min-width: mantine.$mantine-breakpoint-xs) {
+    display: none;
+  }
+
+  @media (max-width: mantine.$mantine-breakpoint-xs) {
+    margin-bottom: var(--mantine-spacing-xl);
+  }
 }
 
 .header {
@@ -43,11 +43,11 @@
   padding-left: var(--mantine-spacing-xl);
   backdrop-filter: blur(8px);
 
-  @include dark {
+  @include mantine.dark {
     @include dark-background;
   }
 
-  @include light {
+  @include mantine.light {
     @include light-background;
   }
 }
