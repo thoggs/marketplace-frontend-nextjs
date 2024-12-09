@@ -20,7 +20,7 @@ spec:
         - name: NEXT_PUBLIC_BASE_URL
           value: "http://marketplace-backend-pod:8080"
         - name: NEXTAUTH_URL
-          value: "http://marketplace-frontend-pod:3000"
+          value: "http://localhost:3000"
         - name: AUTH_TRUST_HOST
           value: "true"
         - name: AUTH_SECRET
