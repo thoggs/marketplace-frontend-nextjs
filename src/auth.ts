@@ -88,7 +88,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             body: JSON.stringify({
               githubToken: account?.access_token,
             }),
-          });
+          },
+        );
 
         if (!githubAuth.ok) return false;
       }
