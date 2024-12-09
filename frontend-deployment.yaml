@@ -31,7 +31,7 @@ spec:
             - name: NEXT_TELEMETRY_DISABLED
               value: "1"
             - name: NEXT_PUBLIC_BASE_URL
-              value: "http://marketplace-stack-nginx"
+              value: "http://marketplace-backend-pod:8080"
             - name: AUTH_TRUST_HOST
               value: "true"
             - name: AUTH_SECRET

@@ -21,7 +21,10 @@ declare module "next-auth" {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    GitHub,
+    GitHub({
+      clientId: `${process.env.AUTH_GITHUB_CLIENT_ID}`,
+      clientSecret: `${process.env.AUTH_GITHUB_CLIENT_SECRET}`,
+    }),
     Credentials({
       credentials: {
         email: {},
@@ -72,6 +75,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async signIn({ account, user, credentials }) {
       if (!credentials) {
+        console.log(account?.access_token)
         const githubAuth = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN_GITHUB}`, {
             method: 'POST',
