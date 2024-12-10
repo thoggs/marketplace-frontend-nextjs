@@ -22,7 +22,7 @@ spec:
 #        - name: NEXTAUTH_URL
 #          value: "http://localhost:3000"
 #        - name: AUTH_TRUST_HOST
-#          value: "FILL_FOR_KUBERNETS"
+#          value: "true"
 #        - name: AUTH_SECRET
 #          value: "FILL_FOR_KUBERNETS"
 #        - name: AUTH_GITHUB_CLIENT_ID
