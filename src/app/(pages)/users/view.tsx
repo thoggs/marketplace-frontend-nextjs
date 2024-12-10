@@ -23,10 +23,9 @@ import { useSession } from "next-auth/react";
 import useUserValidation from "@/shared/validators/hooks/useUserValidation";
 import { User } from '@/shared/types/response/user';
 import { MainResponse, MainResponseWithPagination } from "@/shared/types/response/dto";
-import { URI_PATH } from "@/shared/constants/path";
 import { ROLES } from "@/shared/constants/roles";
 
-export default function UsersView({ initialData }: UsersViewProps) {
+export default function UsersView({ initialData, clientUri }: UsersViewProps) {
   const session = useSession();
   const [ globalFilter, setGlobalFilter ] = useState(String());
   const [ sorting, setSorting ] = useState<MRT_SortingState>([]);
@@ -159,7 +158,7 @@ export default function UsersView({ initialData }: UsersViewProps) {
   function useShowUser() {
     return useMutation({
       mutationFn: async (userId: string) => {
-        return show<MainResponse<User>>(URI_PATH.API.USERS, userId).then(response => response.data.data);
+        return show<MainResponse<User>>(clientUri, userId).then(response => response.data.data);
       },
     });
   }
@@ -180,7 +179,7 @@ export default function UsersView({ initialData }: UsersViewProps) {
       refetchIntervalInBackground: true,
       queryFn: async () => {
         const sortingParam = sorting ? encodeURIComponent(JSON.stringify(sorting)) : [];
-        const response = await list<MainResponseWithPagination<User>>(URI_PATH.API.USERS, {
+        const response = await list<MainResponseWithPagination<User>>(clientUri, {
           params: {
             page: pagination.pageIndex + 1,
             pageSize: pagination.pageSize,
@@ -198,7 +197,7 @@ export default function UsersView({ initialData }: UsersViewProps) {
   function useCreateUser() {
     return useMutation({
       mutationFn: async (user: User) => {
-        const req = create<User>(URI_PATH.API.USERS, user).then(response => response.data);
+        const req = create<User>(clientUri, user).then(response => response.data);
         await toast.promise(
           req,
           {
@@ -235,7 +234,7 @@ export default function UsersView({ initialData }: UsersViewProps) {
   function useUpdateUser() {
     return useMutation({
       mutationFn: async (user: User) => {
-        const req = update<User>(URI_PATH.API.USERS, user.id, user).then(response => response.data);
+        const req = update<User>(clientUri, user.id, user).then(response => response.data);
         await toast.promise(
           req,
           {
@@ -271,7 +270,7 @@ export default function UsersView({ initialData }: UsersViewProps) {
   function useDeleteUser() {
     return useMutation({
       mutationFn: async (userId: string) => {
-        const req = destroy(URI_PATH.API.USERS, userId).then(response => response.data);
+        const req = destroy(clientUri, userId).then(response => response.data);
 
         await toast.promise(
           req,

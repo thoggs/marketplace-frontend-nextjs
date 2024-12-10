@@ -22,10 +22,9 @@ import { useSession } from "next-auth/react";
 import { ProductsViewProps } from "@/app/(pages)/products/types";
 import useProductValidation from "@/shared/validators/hooks/useProductValidation";
 import { Product } from "@/shared/types/response/product";
-import { URI_PATH } from "@/shared/constants/path";
 import { MainResponse, MainResponseWithPagination } from "@/shared/types/response/dto";
 
-export default function ProductsView({ initialData }: ProductsViewProps) {
+export default function ProductsView({ clientUri, initialData }: ProductsViewProps) {
   const session = useSession();
   const [ globalFilter, setGlobalFilter ] = useState(String());
   const [ sorting, setSorting ] = useState<MRT_SortingState>([]);
@@ -128,7 +127,7 @@ export default function ProductsView({ initialData }: ProductsViewProps) {
   function useShowProduct() {
     return useMutation({
       mutationFn: async (ProductId: string) => {
-        return show<MainResponse<Product>>(URI_PATH.API.PRODUCTS, ProductId).then(response => response.data.data);
+        return show<MainResponse<Product>>(clientUri, ProductId).then(response => response.data.data);
       },
     });
   }
@@ -148,7 +147,7 @@ export default function ProductsView({ initialData }: ProductsViewProps) {
       staleTime: !!session.data?.user.data.accessToken ? 0 : Infinity,
       queryFn: async () => {
         const sortingParam = sorting ? encodeURIComponent(JSON.stringify(sorting)) : [];
-        const response = await list<MainResponseWithPagination<Product>>(URI_PATH.API.PRODUCTS, {
+        const response = await list<MainResponseWithPagination<Product>>(clientUri, {
           params: {
             page: pagination.pageIndex + 1,
             pageSize: pagination.pageSize,
@@ -166,7 +165,7 @@ export default function ProductsView({ initialData }: ProductsViewProps) {
   function useCreateProduct() {
     return useMutation({
       mutationFn: async (product: Product) => {
-        const req = create<Product>(URI_PATH.API.PRODUCTS, product).then(response => response.data);
+        const req = create<Product>(clientUri, product).then(response => response.data);
 
         await toast.promise(
           req,
@@ -206,7 +205,7 @@ export default function ProductsView({ initialData }: ProductsViewProps) {
   function useUpdateProduct() {
     return useMutation({
       mutationFn: async (product: Product) => {
-        const req = update<Product>(URI_PATH.API.PRODUCTS, product.id, product).then(response => response.data);
+        const req = update<Product>(clientUri, product.id, product).then(response => response.data);
 
         await toast.promise(
           req,
@@ -244,7 +243,7 @@ export default function ProductsView({ initialData }: ProductsViewProps) {
   function useDeleteProduct() {
     return useMutation({
       mutationFn: async (ProductId: string) => {
-        const req = destroy(URI_PATH.API.PRODUCTS, ProductId).then(response => response.data);
+        const req = destroy(clientUri, ProductId).then(response => response.data);
 
         await toast.promise(
           req,
