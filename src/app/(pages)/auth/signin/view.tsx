@@ -135,7 +135,7 @@ export default function SigninView() {
                 onClick={submitCredentialsSignIn}
                 className={classes.signinButton}
                 loading={onSubmitCredentialsLoading}
-                disabled={onSubmitCredentialsLoading}
+                disabled={onSubmitGitHubLoading || onSubmitCredentialsLoading}
                 variant='outline'
                 size='lg'
                 color='blue.4'
