@@ -19,6 +19,7 @@ import { SignInFormType, SignInValidateSchema } from "@/app/(pages)/auth/signin/
 import { onSubmitCredentialsSignIn, onSubmitGitHubSignIn } from "@/app/actions/auth/actions";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 export default function SigninView() {
   const { height } = useViewportSize();
@@ -39,10 +40,16 @@ export default function SigninView() {
         await onSubmitCredentialsSignIn(form.values.email, form.values.password);
       }
     } catch (error) {
+      if (isRedirectError(error)) {
+        console.error('Redirect error!: ', error);
+        throw error;
+      }
+
       form.setErrors({
         email: 'Email ou senha inválidos',
         password: 'Email ou senha inválidos'
       });
+
       hadleCredentials(false);
     }
   }
