@@ -33,7 +33,6 @@ export default function SigninView() {
   });
 
   async function submitCredentialsSignIn() {
-    form.validate();
     try {
       if (form.isValid()) {
         hadleCredentials(true);
@@ -106,6 +105,7 @@ export default function SigninView() {
               </Flex>
               <Input
                 {...form.getInputProps('email')}
+                disabled={onSubmitGitHubLoading || onSubmitCredentialsLoading}
                 name='email'
                 type='email'
                 className={classes.input}
@@ -116,6 +116,7 @@ export default function SigninView() {
               />
               <PasswordInput
                 {...form.getInputProps('password')}
+                disabled={onSubmitGitHubLoading || onSubmitCredentialsLoading}
                 className={classes.input}
                 name='password'
                 type='password'
