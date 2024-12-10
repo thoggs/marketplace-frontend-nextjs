@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: marketplace-frontend-pod
+  name: marketplace-frontend-nextjs-pod
   labels:
-    app: marketplace-frontend
+    app: marketplace-frontend-nextjs
 spec:
   hostname: frontend-app
   containers:

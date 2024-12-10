@@ -1,6 +1,6 @@
 services:
   app:
-    container_name: marketplace-frontend-app
+    container_name: marketplace-frontend-nextjs-app
     build:
       context: .
       dockerfile: Dockerfile
