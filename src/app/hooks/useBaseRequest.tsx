@@ -1,7 +1,6 @@
 'use client';
 import axios, { AxiosInstance } from "axios";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 
 export function useBaseRequest() {
   const session = useSession();
