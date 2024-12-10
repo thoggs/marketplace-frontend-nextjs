@@ -2,7 +2,6 @@ import { auth } from "@/auth";
 import { ApiService } from "@/app/services/api/types";
 
 const initApiService = async (): Promise<ApiService> => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
   const session = await auth();
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
@@ -21,30 +20,34 @@ const initApiService = async (): Promise<ApiService> => {
   };
 
   return {
-    list: async <T>(endpoint: string, params?: Record<string, any>): Promise<T> => {
+    list: async <T>(uri: string, params?: Record<string, any>): Promise<T> => {
       const queryParams = new URLSearchParams(params).toString();
-      const url = `${baseUrl}/${endpoint}?${queryParams}`;
+      const url = `${uri}?${queryParams}`;
       return handleFetch<T>(url, { headers });
     },
-    show: async <T>(endpoint: string, id: string | number): Promise<T> => {
-      return handleFetch<T>(`${baseUrl}/${endpoint}/${id}`, { headers });
+
+    show: async <T>(uri: string, id: string | number): Promise<T> => {
+      return handleFetch<T>(`${uri}/${id}`, { headers });
     },
-    create: async <T>(endpoint: string, data: any): Promise<T> => {
-      return handleFetch<T>(`${baseUrl}/${endpoint}`, {
+
+    create: async <T>(uri: string, data: any): Promise<T> => {
+      return handleFetch<T>(uri, {
         method: 'POST',
         headers,
         body: JSON.stringify(data),
       });
     },
-    update: async <T>(endpoint: string, id: string | number, data: any): Promise<T> => {
-      return handleFetch<T>(`${baseUrl}/${endpoint}/${id}`, {
+
+    update: async <T>(uri: string, id: string | number, data: any): Promise<T> => {
+      return handleFetch<T>(`${uri}/${id}`, {
         method: 'PUT',
         headers,
         body: JSON.stringify(data),
       });
     },
-    destroy: async <T>(endpoint: string, id: string | number): Promise<T> => {
-      return handleFetch<T>(`${baseUrl}/${endpoint}/${id}`, {
+
+    destroy: async <T>(uri: string, id: string | number): Promise<T> => {
+      return handleFetch<T>(`${uri}/${id}`, {
         method: 'DELETE',
         headers,
       });

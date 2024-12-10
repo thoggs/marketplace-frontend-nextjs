@@ -5,11 +5,10 @@ import { DashboardViewProps, PriceByCategory, StockByCategory } from "@/app/(pag
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Product } from "@/shared/types/response/product";
 import { MainResponseWithPagination } from "@/shared/types/response/dto";
-import { URI_PATH } from "@/shared/constants/path";
 import { useSession } from "next-auth/react";
 import useRequest from "@/app/hooks/useRequest";
 
-export default function DashboardView({ initialProducts }: DashboardViewProps) {
+export default function DashboardView({ initialProducts, clientUri }: DashboardViewProps) {
   const session = useSession();
   const { list } = useRequest();
   const { data: fetchedProducts = [] } = useListProducts();
@@ -41,7 +40,7 @@ export default function DashboardView({ initialProducts }: DashboardViewProps) {
       placeholderData: keepPreviousData,
       staleTime: !!session.data?.user.data.accessToken ? 0 : Infinity,
       queryFn: async () => {
-        const response = await list<MainResponseWithPagination<Product>>(URI_PATH.API.PRODUCTS, {
+        const response = await list<MainResponseWithPagination<Product>>(clientUri, {
           params: {
             pageSize: 100 * 1000,
           }

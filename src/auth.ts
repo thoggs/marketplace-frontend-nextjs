@@ -3,7 +3,7 @@ import Credentials from "@auth/core/providers/credentials";
 import GitHub from "@auth/core/providers/github";
 import { User } from "@/shared/types/response/user";
 import { Metadata } from "@/shared/types/response/dto";
-import { URI_PATH } from "@/shared/constants/path";
+import { API } from "@/shared/constants/path";
 
 declare module "next-auth" {
   interface Session {
@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         const authResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN}`, {
+          API.SERVER.AUTH.SIGN_IN, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, account, user }) {
       if (account?.access_token) {
         const githubAuth = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN_GITHUB}`, {
+          API.SERVER.AUTH.SIGN_IN_GITHUB, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ account, credentials }) {
       if (!credentials) {
         const githubAuth = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/${URI_PATH.AUTH.SIGN_IN_GITHUB}`, {
+          API.SERVER.AUTH.SIGN_IN_GITHUB, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

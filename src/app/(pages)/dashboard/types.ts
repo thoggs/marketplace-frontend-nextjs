@@ -1,6 +1,7 @@
 import { Product } from "@/shared/types/response/product";
 
 export type DashboardViewProps = {
+  clientUri: string;
   initialProducts: Product[];
 }
 
