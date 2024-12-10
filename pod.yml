@@ -12,23 +12,23 @@ spec:
       ports:
         - containerPort: 3000
           hostPort: 3000
-      env:
-        - name: NODE_ENV
-          value: 'production'
-        - name: NEXT_TELEMETRY_DISABLED
-          value: "1"
-        - name: NEXT_PUBLIC_BASE_URL
-          value: "http://marketplace-backend-pod:8080"
-        - name: NEXTAUTH_URL
-          value: "http://localhost:3000"
-        - name: AUTH_TRUST_HOST
-          value: "true"
-        - name: AUTH_SECRET
-          value: "8cf9545ca93c4c5011f3dd2b348e6d66"
-        - name: AUTH_GITHUB_CLIENT_ID
-          value: "Ov23li9ogKkhK6oszaIc"
-        - name: AUTH_GITHUB_CLIENT_SECRET
-          value: "c994ab85f6ae1dee4da6159a2d4c5fd1d7b80520"
+#      env:
+#        - name: NODE_ENV
+#          value: 'production'
+#        - name: NEXT_TELEMETRY_DISABLED
+#          value: "1"
+#        - name: NEXT_PUBLIC_BASE_URL
+#          value: "http://marketplace-backend-pod:8080"
+#        - name: NEXTAUTH_URL
+#          value: "http://localhost:3000"
+#        - name: AUTH_TRUST_HOST
+#          value: "FILL_FOR_KUBERNETS"
+#        - name: AUTH_SECRET
+#          value: "FILL_FOR_KUBERNETS"
+#        - name: AUTH_GITHUB_CLIENT_ID
+#          value: "FILL_FOR_KUBERNETS"
+#        - name: AUTH_GITHUB_CLIENT_SECRET
+#          value: "FILL_FOR_KUBERNETS"
       resources:
         requests:
           memory: "500Mi"
