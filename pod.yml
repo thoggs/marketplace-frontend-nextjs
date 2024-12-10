@@ -31,11 +31,11 @@ spec:
 #          value: "FILL_FOR_KUBERNETS"
       resources:
         requests:
-          memory: "500Mi"
-          cpu: "250m"
-        limits:
           memory: "1Gi"
           cpu: "500m"
+        limits:
+          memory: "2Gi"
+          cpu: "1"
   restartPolicy: Always
 
 
