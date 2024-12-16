@@ -19,7 +19,7 @@ import { SignInFormType, SignInValidateSchema } from "@/app/(pages)/auth/signin/
 import { onSubmitCredentialsSignIn, onSubmitGitHubSignIn } from "@/app/actions/auth/actions";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { isRedirectError } from "next/dist/client/components/redirect";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 export default function SigninView() {
   const { height } = useViewportSize();

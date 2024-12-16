@@ -8,27 +8,27 @@ spec:
   hostname: frontend-app
   containers:
     - name: app
-      image: localhost/marketplace-frontend-nextjs:latest
+      image: 361769563347.dkr.ecr.us-east-1.amazonaws.com/marketplace-frontend-nextjs:latest
       ports:
         - containerPort: 3000
           hostPort: 3000
-#      env:
-#        - name: NODE_ENV
-#          value: 'production'
-#        - name: NEXT_TELEMETRY_DISABLED
-#          value: "1"
-#        - name: NEXT_PUBLIC_BASE_URL
-#          value: "http://marketplace-backend-pod:8080"
-#        - name: NEXTAUTH_URL
-#          value: "http://localhost:3000"
-#        - name: AUTH_TRUST_HOST
-#          value: "true"
-#        - name: AUTH_SECRET
-#          value: "FILL_FOR_KUBERNETS"
-#        - name: AUTH_GITHUB_CLIENT_ID
-#          value: "FILL_FOR_KUBERNETS"
-#        - name: AUTH_GITHUB_CLIENT_SECRET
-#          value: "FILL_FOR_KUBERNETS"
+      #      env:
+      #        - name: NODE_ENV
+      #          value: 'production'
+      #        - name: NEXT_TELEMETRY_DISABLED
+      #          value: "1"
+      #        - name: NEXT_PUBLIC_BASE_URL
+      #          value: "http://marketplace-backend-pod:8080"
+      #        - name: NEXTAUTH_URL
+      #          value: "http://localhost:3000"
+      #        - name: AUTH_TRUST_HOST
+      #          value: "true"
+      #        - name: AUTH_SECRET
+      #          value: "FILL_FOR_KUBERNETS"
+      #        - name: AUTH_GITHUB_CLIENT_ID
+      #          value: "FILL_FOR_KUBERNETS"
+      #        - name: AUTH_GITHUB_CLIENT_SECRET
+      #          value: "FILL_FOR_KUBERNETS"
       resources:
         requests:
           memory: "1Gi"
@@ -38,5 +38,20 @@ spec:
           cpu: "2"
   restartPolicy: Always
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: marketplace-frontend-nextjs-service
+  labels:
+    app: marketplace-frontend-nextjs
+spec:
+  selector:
+    app: marketplace-frontend-nextjs
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
 
 # podman build --rm --layers=false -t marketplace-frontend-nextjs:latest . && podman play kube pod.yml
