@@ -10,15 +10,15 @@
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
-    "@mantine/charts": "^7.15.1",
-    "@mantine/core": "^7.15.1",
-    "@mantine/dates": "^7.15.1",
-    "@mantine/form": "^7.15.1",
-    "@mantine/hooks": "^7.15.1",
-    "@mantine/modals": "^7.15.1",
+    "@mantine/charts": "^7.15.2",
+    "@mantine/core": "^7.15.2",
+    "@mantine/dates": "^7.15.2",
+    "@mantine/form": "^7.15.2",
+    "@mantine/hooks": "^7.15.2",
+    "@mantine/modals": "^7.15.2",
     "@reduxjs/toolkit": "^2.5.0",
     "@tabler/icons-react": "^3.26.0",
-    "@tanstack/react-query": "^5.62.8",
+    "@tanstack/react-query": "^5.62.11",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
@@ -49,5 +49,5 @@
     "sass-loader": "^16.0.4",
     "typescript": "^5"
   },
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.6.0"
 }
