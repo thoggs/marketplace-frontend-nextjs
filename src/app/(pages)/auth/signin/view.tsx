@@ -118,8 +118,7 @@ export default function SigninView() {
                 className={classes.input}
                 leftSection={<IconAt size='1.1rem'/>}
                 placeholder="Email"
-                size="lg"
-                mt='xl'
+                size="lg"                mt='xl'
               />
               <PasswordInput
                 {...form.getInputProps('password')}
