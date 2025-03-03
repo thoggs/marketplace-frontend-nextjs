@@ -26,7 +26,7 @@ pipeline {
 						npm run build
 						cp -r .next/standalone ./
 						cp -r .next/static ./
-						cp -r public ./
+						cp -r public/* ./
             		'''
                 }
             }
