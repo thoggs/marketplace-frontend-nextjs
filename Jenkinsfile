@@ -22,9 +22,12 @@ pipeline {
 			steps {
 				container('node') {
 					sh '''
-                        npm install
-                        npm run build
-                    '''
+						npm install
+						npm run build
+						cp -r .next/standalone ./
+						cp -r .next/static ./
+						cp -r public ./
+            		'''
                 }
             }
         }
