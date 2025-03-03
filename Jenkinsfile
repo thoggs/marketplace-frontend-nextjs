@@ -24,9 +24,6 @@ pipeline {
 					sh '''
 						npm install
 						npm run build
-						mkdir -p .next
-						cp -r .next/standalone .next/
-						cp -r .next/static .next/
 						cp -r public ./
             		'''
                 }
