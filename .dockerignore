@@ -8,7 +8,9 @@
 **/.toolstarget
 **/.vs
 **/.vscode
-**/.next
+**/.next/*
+!**/.next/standalone
+!**/.next/static
 **/.cache
 **/*.*proj.user
 **/*.dbmdl
