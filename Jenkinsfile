@@ -24,6 +24,7 @@ pipeline {
 					sh '''
 						npm install
 						npm run build
+						ls -la .next
             		'''
                 }
             }
