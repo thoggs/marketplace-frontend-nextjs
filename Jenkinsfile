@@ -10,6 +10,7 @@ pipeline {
     }
 
     environment {
+		PROJECT_KEY = 'marketplace-frontend-nextjs:latest'
 		DOCKER_IMAGE = '361769563347.dkr.ecr.us-east-1.amazonaws.com/marketplace-frontend-nextjs:latest'
 		AWS_REGISTRY = '361769563347.dkr.ecr.us-east-1.amazonaws.com'
         AWS_REGION = 'us-east-1'
@@ -80,7 +81,7 @@ pipeline {
 						withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
 							sh '''
 							sonar-scanner \
-								-Dsonar.projectKey=portfolio-ssr \
+								-Dsonar.projectKey=$PROJECT_KEY \
 								-Dsonar.sources=src \
 								-Dsonar.exclusions="**/node_modules/**,**/dist/**,**/*.test.ts,**/*.spec.ts,**/*.test.js,**/*.spec.js" \
 								-Dsonar.typescript.tsconfigPath=tsconfig.json \
