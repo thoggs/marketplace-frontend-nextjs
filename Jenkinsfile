@@ -11,7 +11,7 @@ pipeline {
 
     environment {
 		PROJECT_KEY = 'marketplace-frontend-nextjs:latest'
-		DOCKER_IMAGE = '361769563347.dkr.ecr.us-east-1.amazonaws.com/marketplace-frontend-nextjs:latest'
+		DOCKER_IMAGE = '361769563347.dkr.ecr.us-east-1.amazonaws.com/marketplace-frontend-nextjs'
 		AWS_REGISTRY = '361769563347.dkr.ecr.us-east-1.amazonaws.com'
         AWS_REGION = 'us-east-1'
     }
