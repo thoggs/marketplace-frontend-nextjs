@@ -22,10 +22,10 @@ pipeline {
 			steps {
 				container('node') {
 					sh '''
-						npm install
-						npm run build
-						ls -la .next
-            		'''
+						corepack enable && corepack prepare yarn@stable --activate
+                        yarn
+                        yarn build
+                    '''
                 }
             }
         }
