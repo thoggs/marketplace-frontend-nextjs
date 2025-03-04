@@ -18,7 +18,7 @@ pipeline {
 
     stages {
 
-		stage('Restore npm packages') {
+		stage('Restore & Install Deps') {
 			steps {
 				container('node') {
 					writeFile file: "next-lock.cache", text: "$GIT_COMMIT"
