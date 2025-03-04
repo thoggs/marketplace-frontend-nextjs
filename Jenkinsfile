@@ -32,7 +32,7 @@ pipeline {
 					]) {
 						sh '''
 							corepack enable && corepack prepare yarn@stable --activate
-							yarn install --frozen-lockfile
+							yarn
 						'''
 					}
 				}
