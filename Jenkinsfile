@@ -18,17 +18,44 @@ pipeline {
 
     stages {
 
-		stage('Install Dep & Build') {
+		stage('Restore npm packages') {
 			steps {
 				container('node') {
-					sh '''
-						corepack enable && corepack prepare yarn@stable --activate
-                        yarn
-                        yarn build
-                    '''
-                }
-            }
-        }
+					writeFile file: "next-lock.cache", text: "$GIT_COMMIT"
+
+					cache(caches: [
+						arbitraryFileCache(
+							path: "node_modules",
+							includes: "**/*",
+							cacheValidityDecidingFile: "yarn.lock"
+						)
+					]) {
+						sh '''
+							corepack enable && corepack prepare yarn@stable --activate
+							yarn install --frozen-lockfile
+						'''
+					}
+				}
+			}
+		}
+
+		stage('Build') {
+			steps {
+				container('node') {
+					writeFile file: "next-lock.cache", text: "$GIT_COMMIT"
+
+					cache(caches: [
+						arbitraryFileCache(
+							path: ".next/cache",
+							includes: "**/*",
+							cacheValidityDecidingFile: "next-lock.cache"
+						)
+					]) {
+						sh 'yarn build'
+					}
+				}
+			}
+		}
 
 		stage('Set up QEMU') {
 			steps {
