@@ -11,7 +11,7 @@ pipeline {
 
     environment {
 		PROJECT_KEY = 'marketplace-frontend-nextjs'
-		DOCKER_IMAGE = '361769563347.dkr.ecr.us-east-1.amazonaws.com/marketplace-frontend-nextjs'
+		APP_IMAGE = '361769563347.dkr.ecr.us-east-1.amazonaws.com/marketplace-frontend-nextjs'
 		AWS_REGISTRY = '361769563347.dkr.ecr.us-east-1.amazonaws.com'
         AWS_REGION = 'us-east-1'
     }
@@ -57,24 +57,7 @@ pipeline {
 			}
 		}
 
-		stage('Set up QEMU') {
-			steps {
-				container('docker') {
-					sh 'docker run --rm --privileged multiarch/qemu-user-static --reset -p yes || true'
-                }
-            }
-        }
-
-        stage('Set up Docker Buildx') {
-			steps {
-				container('docker') {
-					sh 'docker buildx create --use --name mybuilder || true'
-                    sh 'docker buildx inspect --bootstrap'
-                }
-            }
-        }
-
-        stage('Login to AWS ECR') {
+        stage('Login AWS ECR') {
 			steps {
 				container('aws-cli') {
 					withCredentials([
@@ -92,12 +75,26 @@ pipeline {
 			}
 		}
 
-		stage('Login to Docker') {
+		stage('Login Buildah AWS ECR') {
 			steps {
-				container('docker') {
+				container('buildah') {
 					sh '''
-						cat ecr-login.txt | docker login --username AWS --password-stdin $AWS_REGISTRY
+						buildah login -u AWS -p $(cat ecr-login.txt) $AWS_REGISTRY
 					'''
+				}
+			}
+		}
+
+		stage('Login Buildah Docker Hub') {
+			steps {
+				container('buildah') {
+					withCredentials([usernamePassword(
+						credentialsId: 'docker-hub-credentials',
+						usernameVariable: 'DOCKERHUB_USER',
+						passwordVariable: 'DOCKERHUB_PASS'
+					)]) {
+						sh 'buildah login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS docker.io'
+					}
 				}
 			}
 		}
@@ -124,9 +121,9 @@ pipeline {
 			steps {
 				container('buildah') {
 					sh '''
-						buildah bud --layers --platform linux/amd64 -t ${DOCKER_IMAGE}-amd64:latest .
-						buildah bud --layers --platform linux/arm64 -t ${DOCKER_IMAGE}-arm64:latest .
-						buildah manifest create ${DOCKER_IMAGE}:latest --amend ${DOCKER_IMAGE}-amd64:latest --amend ${DOCKER_IMAGE}-arm64:latest
+						buildah bud --layers --platform linux/amd64 -t ${APP_IMAGE}-amd64:latest .
+						buildah bud --layers --platform linux/arm64 -t ${APP_IMAGE}-arm64:latest .
+						buildah manifest create ${APP_IMAGE}:latest --amend ${APP_IMAGE}-amd64:latest --amend ${APP_IMAGE}-arm64:latest
             		'''
             	}
         	}
@@ -136,7 +133,7 @@ pipeline {
 			steps {
 				container('buildah') {
 					sh '''
-                		buildah manifest push ${DOCKER_IMAGE}:latest docker://${DOCKER_IMAGE}:latest
+                		buildah manifest push ${APP_IMAGE}:latest docker://${APP_IMAGE}:latest
             		'''
 				}
 			}
