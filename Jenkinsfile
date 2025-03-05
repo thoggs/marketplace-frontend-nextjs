@@ -31,7 +31,7 @@ pipeline {
 						)
 					]) {
 						sh '''
-							corepack enable && corepack prepare yarn@latest --activate
+							corepack enable && corepack prepare yarn@stable --activate
 							yarn
 						'''
 					}
