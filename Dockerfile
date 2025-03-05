@@ -2,8 +2,6 @@ FROM node:lts-alpine AS runner
 
 WORKDIR /app
 
-RUN mkdir -p /app/.next/cache/images
-
 COPY .next/standalone ./
 COPY .next/static ./.next/static
 COPY public ./public
