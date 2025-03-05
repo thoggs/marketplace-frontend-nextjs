@@ -17,12 +17,12 @@
     "@mantine/hooks": "^7.17.1",
     "@mantine/modals": "^7.17.1",
     "@reduxjs/toolkit": "^2.6.0",
-    "@tabler/icons-react": "^3.30.0",
+    "@tabler/icons-react": "^3.31.0",
     "@tanstack/react-query": "^5.67.1",
-    "axios": "^1.7.9",
+    "axios": "^1.8.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
-    "framer-motion": "^11.17.0",
+    "framer-motion": "^12.4.10",
     "mantine-react-table": "^2.0.0-beta.9",
     "moment": "^2.30.1",
     "next": "15.2.0",
@@ -40,7 +40,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^8",
+    "eslint": "9.21.0",
     "eslint-config-next": "15.2.0",
     "postcss": "^8.5.3",
     "postcss-preset-mantine": "^1.17.0",
@@ -49,5 +49,5 @@
     "sass-loader": "^16.0.5",
     "typescript": "^5"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.7.0"
 }
