@@ -18,7 +18,7 @@ pipeline {
 
     stages {
 
-		stage('Restore npm packages') {
+		stage('Restore & Install Deps') {
 			steps {
 				container('node') {
 					writeFile file: "next-lock.cache", text: "$GIT_COMMIT"
@@ -32,7 +32,7 @@ pipeline {
 					]) {
 						sh '''
 							corepack enable && corepack prepare yarn@stable --activate
-							yarn install --frozen-lockfile
+							yarn
 						'''
 					}
 				}
@@ -120,30 +120,27 @@ pipeline {
 			}
 		}
 
-		stage('Trivy Security Scan') {
+		stage('Build Multi-Arch') {
 			steps {
-				container('trivy') {
-					dir('conecta') {
-						sh '''
-							trivy fs --skip-dirs build/static/js .
-						'''
-					}
+				container('buildah') {
+					sh '''
+						buildah bud --layers --platform linux/amd64 -t ${DOCKER_IMAGE}-amd64:latest .
+						buildah bud --layers --platform linux/arm64 -t ${DOCKER_IMAGE}-arm64:latest .
+						buildah manifest create ${DOCKER_IMAGE}:latest --amend ${DOCKER_IMAGE}-amd64:latest --amend ${DOCKER_IMAGE}-arm64:latest
+            		'''
+            	}
+        	}
+		}
+
+		stage('Push Image') {
+			steps {
+				container('buildah') {
+					sh '''
+                		buildah manifest push ${DOCKER_IMAGE}:latest docker://${DOCKER_IMAGE}:latest
+            		'''
 				}
 			}
 		}
-
-       stage('Build Multi-Arch') {
-			steps {
-				container('docker') {
-					sh '''
-                        docker buildx build \
-                            --platform linux/amd64,linux/arm64 \
-                            -t $DOCKER_IMAGE:latest \
-                            --push .
-                    '''
-                }
-            }
-       }
 
     }
 }
