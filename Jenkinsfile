@@ -31,7 +31,7 @@ pipeline {
 						)
 					]) {
 						sh '''
-							mkdir -p .yarn/releases && corepack enable
+							corepack enable && corepack prepare yarn@4.7.0 --activate
 							yarn
 						'''
 					}
